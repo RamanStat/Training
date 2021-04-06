@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{E9751E9E-1B65-45A0-A9A1-7C904D07B0A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Data", "Training.Data\Training.Data.csproj", "{E9751E9E-1B65-45A0-A9A1-7C904D07B0A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RA", "RA\RA.csproj", "{E6C02494-9B9B-4934-A0E8-D3EB5F68D18E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.RA", "Training.RA\Training.RA.csproj", "{E6C02494-9B9B-4934-A0E8-D3EB5F68D18E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDK", "SDK\SDK.csproj", "{9B627A8C-3906-49DD-8FB1-B5EA9DC6C4CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.SDK", "Training.SDK\Training.SDK.csproj", "{9B627A8C-3906-49DD-8FB1-B5EA9DC6C4CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{6736BBAB-DFFE-42B4-A7D5-DD40111B3D50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Tests", "Training.Tests\Training.Tests.csproj", "{6736BBAB-DFFE-42B4-A7D5-DD40111B3D50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{954076D2-1BF0-4870-ADAF-E65773350A4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Training.Service", "Training.Service\Training.Service.csproj", "{954076D2-1BF0-4870-ADAF-E65773350A4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
