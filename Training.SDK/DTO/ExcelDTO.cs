@@ -12,9 +12,9 @@
 
         public string CarModel { get; set; }
 
-        public string CarIssueYear { get; set; }
+        public int CarIssueYear { get; set; }
 
-        public string CarEngine { get; set; }
+        public int CarEngine { get; set; }
 
         public string VendorName { get; set; }
     }
