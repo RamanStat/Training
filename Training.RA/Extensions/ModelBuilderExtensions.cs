@@ -1,6 +1,5 @@
 ﻿using Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace Training.RA.Extensions
 {
@@ -23,10 +22,10 @@ namespace Training.RA.Extensions
                 new Vendor() { Id = 3, Name = "VolkswagenUkraine", Address = "Sofiivska Borschahivka, Kyiv Oblast, Ukraine" });
 
             modelBuilder.Entity<Car>().HasData(
-                new Car() { Id = 1, Brand = "Mercedes", Model = "E-CLASS", Engine = "diesel 2.0", IssueYear = 2021 },
-                new Car() { Id = 2, Brand = "Mercedes", Model = "GLE", Engine = "diesel 5.0", IssueYear = 2020 },
-                new Car() { Id = 3, Brand = "BMW", Model = "X5", Engine = "diesel 3.0", IssueYear = 2020 },
-                new Car() { Id = 4, Brand = "BMW", Model = "X7", Engine = "diesel 5.0", IssueYear = 2021 });
+                new Car() { Id = 1, Brand = "Mercedes", Model = "E-CLASS", Engine = (int)EngineIdentifiers.Diesel, IssueYear = 2021 },
+                new Car() { Id = 2, Brand = "Mercedes", Model = "GLE", Engine = (int)EngineIdentifiers.Diesel, IssueYear = 2020 },
+                new Car() { Id = 3, Brand = "BMW", Model = "X5", Engine = (int)EngineIdentifiers.Diesel, IssueYear = 2020 },
+                new Car() { Id = 4, Brand = "BMW", Model = "X7", Engine = (int)EngineIdentifiers.Diesel, IssueYear = 2021 });
 
             modelBuilder.Entity<Autopart>().HasData(
                 new Autopart() { Id = 1, ProducerId = 2, Name = "Battery", Description = "Battery Edcon DC35300R 35 A/h", Price = 100 },

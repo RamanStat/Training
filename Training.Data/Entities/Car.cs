@@ -11,7 +11,7 @@ namespace Data.Entities
 
         public string Model { get; set; }
 
-        public string Engine { get; set; }
+        public int Engine { get; set; }
 
         public int IssueYear { get; set; }
 
