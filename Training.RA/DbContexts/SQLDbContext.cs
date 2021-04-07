@@ -1,11 +1,11 @@
 ﻿using Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Data.DataContext
+namespace Training.RA.DbContexts
 {
-    public class ApplicationDbContext : DbContext
+    public class SQLDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        public SQLDbContext(DbContextOptions<SQLDbContext> options) : base(options)
         {
 
         }
