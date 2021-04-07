@@ -14,6 +14,6 @@ namespace Data.Entities
 
         public string Email { get; set; }
 
-        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+        public ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

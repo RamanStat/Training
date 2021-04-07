@@ -8,16 +8,17 @@ namespace Data.Entities
 
         public int ProducerId { get; set; }
 
-        public virtual Producer Producer { get; set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }
 
         public double Price { get; set; }
 
-        public virtual ICollection<Vendor> Vendors { get; set; } = new List<Vendor>();
+        public Producer Producer { get; set; }
 
-        public virtual ICollection<Car> Cars { get; set; } = new List<Car>(); 
+
+        public ICollection<Vendor> Vendors { get; set; } = new List<Vendor>();
+
+        public ICollection<Car> Cars { get; set; } = new List<Car>(); 
     }
 }

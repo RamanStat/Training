@@ -18,7 +18,6 @@ namespace Training.Service.Extensions
         {
             services.AddDbContext<SQLDbContext>(options =>
             {
-                options.UseLazyLoadingProxies();
                 options.UseSqlServer(configuration.GetConnectionString("MSSSQLServer"));
             });
 

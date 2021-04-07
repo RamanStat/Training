@@ -12,6 +12,6 @@ namespace Data.Entities
 
         public string Phone { get; set; }
 
-        public virtual ICollection<Autopart> Autoparts { get; set; } = new List<Autopart>();
+        public ICollection<Autopart> Autoparts { get; set; } = new List<Autopart>();
     }
 }
