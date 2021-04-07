@@ -1,5 +1,6 @@
 ﻿using Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Training.RA.Extensions;
 
 namespace Training.RA.DbContexts
 {
@@ -21,5 +22,12 @@ namespace Training.RA.DbContexts
         public DbSet<Autopart> Autoparts { get; set; }
 
         public DbSet<Car> Cars { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Seed();
+        }
     }
 }
