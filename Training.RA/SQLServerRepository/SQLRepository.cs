@@ -31,7 +31,7 @@ namespace Training.RA.SQLServerRepository
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await _entities.AsNoTracking().ToListAsync();
+            return await _entities.ToListAsync();
         }
 
         public async Task<TEntity> GetByIdAsync(int id)
