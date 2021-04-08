@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Text.Json;
 using Training.Service.Extensions;
+using AutoMapper;
+using Training.SDK.Mapping;
 
 namespace Training.Service
 {
@@ -29,6 +31,8 @@ namespace Training.Service
                 {
                     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                 });
+
+            services.AddAutoMapper(a => a.AddProfile<MappingProfile>(), typeof(Startup));
 
             services.RegisterSQLRepositories(Configuration);
 

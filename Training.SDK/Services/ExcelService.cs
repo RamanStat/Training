@@ -1,4 +1,5 @@
-﻿using ExcelDataReader;
+﻿using AutoMapper;
+using ExcelDataReader;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Text;
@@ -11,9 +12,11 @@ namespace Training.SDK.Services
 {
     public class ExcelService : IExcelService
     {
-        public ExcelService()
-        {
+        private readonly IMapper _mapper;
 
+        public ExcelService(IMapper mapper)
+        {
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<ExcelDTO>> ImportExcelFileAsync(IFormFile file)
@@ -30,17 +33,7 @@ namespace Training.SDK.Services
 
                 while (reader.Read())
                 {
-                    excelDTOs.Add(new ExcelDTO()
-                    {
-                        AutopartName = reader.GetValue(0).ToString(),
-                        AutopartPrice = int.Parse(reader.GetValue(1).ToString()),
-                        AutopartDescription = reader.GetValue(2).ToString(),
-                        ProducerName = reader.GetValue(3).ToString(),
-                        CarModel = reader.GetValue(4).ToString(),
-                        CarIssueYear = int.Parse(reader.GetValue(5).ToString()),
-                        CarEngine = int.Parse(reader.GetValue(6).ToString()),
-                        VendorName = reader.GetValue(7).ToString(),
-                    });
+                    excelDTOs.Add(_mapper.Map<ExcelDTO>(reader));
                 }
             }
 
