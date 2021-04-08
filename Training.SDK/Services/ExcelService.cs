@@ -1,36 +1,27 @@
 ﻿using ExcelDataReader;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Training.RA.Interfaces;
 using Training.SDK.DTO;
+using Training.SDK.Interfaces;
 
-namespace Training.Service.Controllers
+namespace Training.SDK.Services
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class TestController : ControllerBase
+    public class ExcelService : IExcelService
     {
-        private readonly IAutopartRepository _autopartRepository;
-
-        public TestController(IAutopartRepository autopartRepository)
+        public ExcelService()
         {
-            _autopartRepository = autopartRepository;
+
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAutopartAsync()
-        {
-            return Ok(await _autopartRepository.GetAllAsync());
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> GetExcel(IFormFile file)
+        public async Task<IEnumerable<ExcelDTO>> ImportExcelFileAsync(IFormFile file)
         {
             var excelDTOs = new List<ExcelDTO>();
+
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
             using (var stream = System.IO.File.Create(file.FileName))
             {
                 await file.CopyToAsync(stream);
@@ -53,7 +44,7 @@ namespace Training.Service.Controllers
                 }
             }
 
-            return Ok(excelDTOs);
+            return excelDTOs;
         }
     }
 }

@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Training.RA.DbContexts;
 using Training.RA.Interfaces;
 using Training.RA.SQLServerRepository;
+using Training.SDK.Interfaces;
+using Training.SDK.Services;
 
 namespace Training.Service.Extensions
 {
@@ -32,6 +34,8 @@ namespace Training.Service.Extensions
             services.AddScoped<IProducerRepository, SQLProducerRepository>();
 
             services.AddScoped<IVendorRepository, SQLVendorRepository>();
+
+            services.AddScoped<IExcelService, ExcelService>();
         }
     }
 }
