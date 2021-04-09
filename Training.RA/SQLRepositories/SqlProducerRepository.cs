@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Training.Data.Entities;
 using Training.RA.Interfaces;
 
 namespace Training.RA.SQLRepositories
