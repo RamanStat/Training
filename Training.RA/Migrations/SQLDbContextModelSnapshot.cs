@@ -8,7 +8,7 @@ using Training.RA.DbContexts;
 
 namespace Training.RA.Migrations
 {
-    [DbContext(typeof(SQLDbContext))]
+    [DbContext(typeof(SqlDbContext))]
     partial class SQLDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

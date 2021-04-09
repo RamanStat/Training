@@ -9,7 +9,7 @@ using Training.RA.DbContexts;
 
 namespace Training.RA.Migrations
 {
-    [DbContext(typeof(SQLDbContext))]
+    [DbContext(typeof(SqlDbContext))]
     [Migration("20210407133201_ChangeCarEngineType")]
     partial class ChangeCarEngineType
     {

@@ -1,5 +1,6 @@
 ﻿using Data.Entities;
 using MongoDB.Driver;
+using Training.RA.Interfaces;
 
 namespace Training.RA.DbContexts
 {

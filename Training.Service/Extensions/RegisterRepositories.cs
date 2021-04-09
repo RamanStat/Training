@@ -4,38 +4,27 @@ using Microsoft.Extensions.DependencyInjection;
 using Training.RA.DbContexts;
 using Training.RA.Interfaces;
 using Training.RA.SQLServerRepository;
-using Training.SDK.Interfaces;
-using Training.SDK.Services;
 
 namespace Training.Service.Extensions
 {
     public static class RegisterRepositories
     {
-        public static void RegisterMongoRepositories(this IServiceCollection services, IConfiguration configuration)
+        public static void RegisterSqlRepositories(this IServiceCollection services, IConfiguration configuration)
         {
-
-        }
-
-        public static void RegisterSQLRepositories(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddDbContext<SQLDbContext>(options =>
+            services.AddDbContext<SqlDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("MSSSQLServer"));
+                options.UseSqlServer(configuration.GetConnectionString("MSSQLServer"));
             });
 
-            services.AddScoped<ICarRepository, SQLCarRepository>();
+            services.AddScoped<IDbContext, SqlDbContext>();
 
-            services.AddScoped<IAutopartRepository, SQLAutopartRepository>();
+            services.AddScoped<ICarRepository, SqlCarRepository>();
 
-            services.AddScoped<IClientRepository, SQLClientRepository>();
+            services.AddScoped<IAutopartRepository, SqlAutopartRepository>();
 
-            services.AddScoped<IOrderRepository, SQLOrderRepository>();
+            services.AddScoped<IProducerRepository, SqlProducerRepository>();
 
-            services.AddScoped<IProducerRepository, SQLProducerRepository>();
-
-            services.AddScoped<IVendorRepository, SQLVendorRepository>();
-
-            services.AddScoped<IExcelService, ExcelService>();
+            services.AddScoped<IVendorRepository, SqlVendorRepository>();
         }
     }
 }

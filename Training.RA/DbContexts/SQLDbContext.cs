@@ -1,15 +1,18 @@
 ﻿using Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Training.RA.Extensions;
+using Training.RA.Interfaces;
 
 namespace Training.RA.DbContexts
 {
-    public class SQLDbContext : DbContext
+    public class SqlDbContext : DbContext, IDbContext
     {
-        public SQLDbContext(DbContextOptions<SQLDbContext> options) : base(options)
+        public SqlDbContext(DbContextOptions<SqlDbContext> options) : base(options)
         {
 
         }
+
+        public DbContext Instance => this;
 
         public DbSet<Order> Orders { get; set; }
 
