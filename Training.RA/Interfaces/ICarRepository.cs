@@ -1,4 +1,4 @@
-﻿using Data.Entities;
+﻿using Training.Data.Entities;
 
 namespace Training.RA.Interfaces
 {

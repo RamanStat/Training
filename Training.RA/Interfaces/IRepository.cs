@@ -6,14 +6,14 @@ namespace Training.RA.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        Task<TEntity> GetByIdAsync(int id, CancellationToken cancellationToken);
+        Task<TEntity> GetByIdAsync(int id, CancellationToken cancellationToken = default);
 
-        Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken);
+        Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default);
 
-        Task CreateAsync(TEntity entity, CancellationToken cancellationToken);
+        Task CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
 
-        Task UpdateAsync(TEntity entity, CancellationToken cancellationToken);
+        Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);
 
-        Task DeleteAsync(TEntity entity, CancellationToken cancellationToken);
+        Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default);
     }
 }

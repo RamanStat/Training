@@ -1,6 +1,5 @@
-﻿using Data.Entities;
-using MongoDB.Driver;
-using Training.RA.Interfaces;
+﻿using MongoDB.Driver;
+using Training.Data.Entities;
 
 namespace Training.RA.DbContexts
 {
@@ -14,34 +13,16 @@ namespace Training.RA.DbContexts
             _context = client.GetDatabase(database);
         }
 
-        public IMongoCollection<Order> Orders
-        {
-            get => _context.GetCollection<Order>("Order");
-        }
+        public IMongoCollection<Order> Orders => _context.GetCollection<Order>("Order");
 
-        public IMongoCollection<Client> Clients
-        {
-            get => _context.GetCollection<Client>("Client");
-        }
+        public IMongoCollection<Client> Clients => _context.GetCollection<Client>("Client");
 
-        public IMongoCollection<Vendor> Vendors
-        {
-            get => _context.GetCollection<Vendor>("Vendor");
-        }
+        public IMongoCollection<Vendor> Vendors => _context.GetCollection<Vendor>("Vendor");
 
-        public IMongoCollection<Producer> Producers
-        {
-            get => _context.GetCollection<Producer>("Producer");
-        }
+        public IMongoCollection<Producer> Producers => _context.GetCollection<Producer>("Producer");
 
-        public IMongoCollection<Autopart> Autoparts
-        {
-            get => _context.GetCollection<Autopart>("Autopart");
-        }
+        public IMongoCollection<Autopart> Autoparts => _context.GetCollection<Autopart>("Autopart");
 
-        public IMongoCollection<Car> Cars
-        {
-            get => _context.GetCollection<Car>("Car");
-        }
+        public IMongoCollection<Car> Cars => _context.GetCollection<Car>("Car");
     }
 }

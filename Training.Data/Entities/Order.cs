@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Data.Entities
+namespace Training.Data.Entities
 {
     public class Order
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Training.Data.Entities;
 using Training.RA.Interfaces;
 
 namespace Training.RA.SQLRepositories
@@ -16,7 +16,7 @@ namespace Training.RA.SQLRepositories
             _context = context;
         }
 
-        public async Task CreateAsync(Autopart entity, CancellationToken cancellationToken = default)
+        public async Task CreateAsync(Autopart entity, CancellationToken cancellationToken)
         {
             await _context.Autoparts.AddAsync(entity, cancellationToken);
             await _context.Instance.SaveChangesAsync(cancellationToken);

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Data.Entities
+namespace Training.Data.Entities
 {
     public class Vendor
     {

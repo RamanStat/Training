@@ -1,5 +1,5 @@
-﻿using Data.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Training.Data.Entities;
 
 namespace Training.RA.Extensions
 {
