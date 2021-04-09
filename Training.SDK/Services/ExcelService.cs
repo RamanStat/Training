@@ -27,9 +27,9 @@ namespace Training.SDK.Services
 
             await using var stream = System.IO.File.Create(file.FileName);
             await file.CopyToAsync(stream, cancellationToken);
+
             using var reader = ExcelReaderFactory.CreateReader(stream);
             reader.Read();
-
             while (reader.Read())
             {
                 excelDTOs.Add(_mapper.Map<ExcelDTO>(reader));

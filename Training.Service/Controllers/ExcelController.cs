@@ -11,12 +11,10 @@ namespace Training.Service.Controllers
     public class ExcelController : ControllerBase
     {
         private readonly IExcelService _excelService;
-        private readonly ICarRepository _carRepository;
 
-        public ExcelController(IExcelService excelService, ICarRepository carRepository)
+        public ExcelController(IExcelService excelService)
         {
             _excelService = excelService;
-            _carRepository = carRepository;
         }
 
         [HttpPost]
