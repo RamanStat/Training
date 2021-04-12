@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Training.SDK\Training.SDK.csproj" />
+    <ProjectReference Include="..\Training.Service\Training.Service.csproj" />
   </ItemGroup>
 
 </Project>

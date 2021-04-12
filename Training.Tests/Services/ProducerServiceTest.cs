@@ -125,5 +125,19 @@ namespace Training.Tests.Services
             //Assert
             Assert.That(expectedProducer, Is.EqualTo(producer).Using(new ProducerDTOEquilityComparer()));
         }
+
+        [Test]
+        public async Task DeleteProducerAsync_SentId_ThrowenNotFound()
+        {
+            //Arrange
+            var expectedProducer = _producers[0];
+            var producerService = new ProducerService(_mapper, _mockProducerRepository.Object);
+
+            //Act
+            var producer = await producerService.CreateProducerAsync(_producers[0]);
+
+            //Assert
+            Assert.That(expectedProducer, Is.EqualTo(producer).Using(new ProducerDTOEquilityComparer()));
+        }
     }
 }

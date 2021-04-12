@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using MongoDB.Driver;
 using Training.Data.Entities;
 using Training.RA.Interfaces;
 using Training.SDK.DTO;
@@ -22,7 +23,7 @@ namespace Training.SDK.Services
         public async Task<ProducerDTO> GetProducerAsync(int id)
         {
             var producer = await _producerRepository.GetByIdAsync(id);
-
+            
             return _mapper.Map<ProducerDTO>(producer);
         }
 

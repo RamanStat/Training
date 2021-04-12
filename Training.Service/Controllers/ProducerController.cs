@@ -25,7 +25,14 @@ namespace Training.Service.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProducerById(int id)
         {
-            return Ok(await _producerService.GetProducerAsync(id));
+            var producerDTO = await _producerService.GetProducerAsync(id);
+
+            if (producerDTO is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(producerDTO);
         }
 
         [HttpPost]
@@ -37,13 +44,27 @@ namespace Training.Service.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateProducer([FromBody]ProducerDTO producerDTO)
         {
-            return Ok(await _producerService.UpdateProducerAsync(producerDTO));
+            var newProducerDTO = await _producerService.UpdateProducerAsync(producerDTO);
+
+            if (newProducerDTO is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(newProducerDTO);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProducerById(int id)
         {
-            return Ok(await _producerService.DeleteProducerAsync(id));
+            var producerDTO = await _producerService.DeleteProducerAsync(id);
+
+            if (producerDTO is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(producerDTO);
         }
     }
 }
