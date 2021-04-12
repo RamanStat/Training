@@ -16,10 +16,13 @@ namespace Training.RA.SQLRepositories
             _context = context;
         }
 
-        public async Task CreateAsync(Car entity, CancellationToken cancellationToken)
+        public async Task<Car> CreateAsync(Car entity, CancellationToken cancellationToken)
         {
-            await _context.Cars.AddAsync(entity, cancellationToken);
+            var car = await _context.Cars.AddAsync(entity, cancellationToken);
+
             await _context.Instance.SaveChangesAsync(cancellationToken);
+
+            return car.Entity;
         }
 
         public async Task DeleteAsync(Car entity, CancellationToken cancellationToken)

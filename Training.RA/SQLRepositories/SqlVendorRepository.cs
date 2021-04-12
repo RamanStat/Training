@@ -16,10 +16,13 @@ namespace Training.RA.SQLRepositories
             _context = context;
         }
 
-        public async Task CreateAsync(Vendor entity, CancellationToken cancellationToken)
+        public async Task<Vendor> CreateAsync(Vendor entity, CancellationToken cancellationToken)
         {
-            await _context.Vendors.AddAsync(entity, cancellationToken);
+            var vendor = await _context.Vendors.AddAsync(entity, cancellationToken);
+
             await _context.Instance.SaveChangesAsync(cancellationToken);
+
+            return vendor.Entity;
         }
 
         public async Task DeleteAsync(Vendor entity, CancellationToken cancellationToken)
@@ -47,6 +50,7 @@ namespace Training.RA.SQLRepositories
         public async Task UpdateAsync(Vendor entity, CancellationToken cancellationToken)
         {
             _context.Instance.Entry(entity).State = EntityState.Modified;
+
             await _context.Instance.SaveChangesAsync(cancellationToken);
         }
     }

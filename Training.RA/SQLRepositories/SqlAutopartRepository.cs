@@ -16,10 +16,13 @@ namespace Training.RA.SQLRepositories
             _context = context;
         }
 
-        public async Task CreateAsync(Autopart entity, CancellationToken cancellationToken)
+        public async Task<Autopart> CreateAsync(Autopart entity, CancellationToken cancellationToken)
         {
-            await _context.Autoparts.AddAsync(entity, cancellationToken);
+            var autopart =  await _context.Autoparts.AddAsync(entity, cancellationToken);
+
             await _context.Instance.SaveChangesAsync(cancellationToken);
+
+            return autopart.Entity;
         }
 
         public async Task DeleteAsync(Autopart entity, CancellationToken cancellationToken)
