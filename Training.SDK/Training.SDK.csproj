@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Training.Data\Training.Data.csproj" />
     <ProjectReference Include="..\Training.RA\Training.RA.csproj" />
   </ItemGroup>
 
