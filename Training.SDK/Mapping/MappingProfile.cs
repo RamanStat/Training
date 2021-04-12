@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ExcelDataReader;
+using Training.Data.Entities;
 using Training.SDK.DTO;
 
 namespace Training.SDK.Mapping
@@ -8,6 +9,9 @@ namespace Training.SDK.Mapping
     {
         public MappingProfile()
         {
+            CreateMap<ProducerDTO, Producer>()
+                .ReverseMap();
+
             CreateMap<IExcelDataReader, ExcelDTO>()
                 .ForMember(e => e.AutopartName, source => source.MapFrom(s => s.GetValue(0)))
                 .ForMember(e => e.AutopartPrice, source => source.MapFrom(s => double.Parse(s.GetValue(1).ToString())))
