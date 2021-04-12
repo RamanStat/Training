@@ -37,7 +37,7 @@ namespace Training.Service
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Training", Version = "v1" });
             });
 
-            services.AddMapper();
+            services.AddAutoMapper();
 
             services.RegisterSqlRepositories(Configuration);
 
