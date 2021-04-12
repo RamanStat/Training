@@ -18,7 +18,6 @@ namespace Training.Tests.Services
         private readonly List<ProducerDTO> _producers;
         private readonly IMapper _mapper;
         private readonly Mock<IProducerRepository> _mockProducerRepository;
-        private readonly ProducerFixture _producerFixture;
 
         public ProducerServiceTest()
         {
@@ -40,21 +39,21 @@ namespace Training.Tests.Services
                 }
             };
             
-            _producerFixture = new ProducerFixture();
+            var producerFixture = new ProducerFixture();
             _mapper = new MapperConfiguration(mc => mc.AddProfile(new MappingProfile())).CreateMapper();
 
             _mockProducerRepository = new Mock<IProducerRepository>();
 
             _mockProducerRepository.Setup(pr => pr.GetAllAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.Run(() => _producerFixture.GetProducers()));
+                .Returns(Task.Run(() => producerFixture.GetProducers()));
             _mockProducerRepository.Setup(pr => pr.GetByIdAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.Run(() => _producerFixture.GetProducer(It.IsAny<int>())));
+                .Returns(Task.Run(() => producerFixture.GetProducer(It.IsAny<int>())));
             _mockProducerRepository.Setup(pr => pr.CreateAsync(It.IsAny<Producer>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.Run(() => _producerFixture.GetProducer(It.IsAny<int>())));
+                .Returns(Task.Run(() => producerFixture.GetProducer(It.IsAny<int>())));
             _mockProducerRepository.Setup(pr => pr.UpdateAsync(It.IsAny<Producer>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.Run(() => _producerFixture.GetProducer(It.IsAny<int>())));
+                .Returns(Task.Run(() => producerFixture.GetProducer(It.IsAny<int>())));
             _mockProducerRepository.Setup(pr => pr.DeleteAsync(It.IsAny<Producer>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.Run(() => _producerFixture.GetProducer(It.IsAny<int>())));
+                .Returns(Task.Run(() => producerFixture.GetProducer(It.IsAny<int>())));
         }
 
         [Test]
