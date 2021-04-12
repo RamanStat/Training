@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Text.Json;
 using Training.Service.Extensions;
-using Training.SDK.Mapping;
 using Training.SDK.Services;
 using Training.SDK.Interfaces;
 
@@ -33,12 +32,12 @@ namespace Training.Service
                     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                 });
 
-            services.AddAutoMapper(a => a.AddProfile<MappingProfile>(), typeof(Startup));
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Training", Version = "v1" });
             });
+
+            services.AddMapper();
 
             services.RegisterSqlRepositories(Configuration);
 

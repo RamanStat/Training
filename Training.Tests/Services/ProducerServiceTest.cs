@@ -8,8 +8,8 @@ using Training.Data.Entities;
 using Training.RA.Interfaces;
 using Training.SDK.DTO;
 using Training.SDK.EqualityComparers;
-using Training.SDK.Mapping;
 using Training.SDK.Services;
+using Training.Service.Mapping;
 
 namespace Training.Tests.Services
 {
