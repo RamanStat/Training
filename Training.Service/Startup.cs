@@ -43,6 +43,8 @@ namespace Training.Service
             services.RegisterSqlRepositories(Configuration);
 
             services.AddScoped<IExcelService, ExcelService>();
+
+            services.AddScoped<IProducerService, ProducerService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
