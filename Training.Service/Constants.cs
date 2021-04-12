@@ -11,19 +11,19 @@
             public const int CARMODEL_COLUMN_OFFSET = 4;
             public const int CARISSUEYEAR_COLUMN_OFFSET = 5;
             public const int CARENGINE_COLUMN_OFFSET = 6;
-            public const int VendorName_COLUMN_OFFSET = 7;
+            public const int VENDORNAME_COLUMN_OFFSET = 7;
         }
 
         public static class ImportFileStructure
         {
-            public const string AutopartName_COLUMN_NAME = nameof(AutopartName_COLUMN_NAME);
-            public const string AutopartPrice_COLUMN_NAME = nameof(AutopartPrice_COLUMN_NAME);
-            public const string AutopartDescription_COLUMN_NAME = nameof(AutopartDescription_COLUMN_NAME);
-            public const string Producer_COLUMN_NAME = nameof(Producer_COLUMN_NAME);
-            public const string CarModel_COLUMN_NAME = nameof(CarModel_COLUMN_NAME);
-            public const string CarIssueYear_COLUMN_NAME = nameof(CarIssueYear_COLUMN_NAME);
-            public const string CarEngine_COLUMN_NAME = nameof(CarEngine_COLUMN_NAME);
-            public const string VendorName_COLUMN_NAME = nameof(VendorName_COLUMN_NAME);
+            public const string AUTOPARTNAME_COLUMN_NAME = nameof(AUTOPARTNAME_COLUMN_NAME);
+            public const string AUTOPARTPRICE_COLUMN_NAME = nameof(AUTOPARTPRICE_COLUMN_NAME);
+            public const string AUTOPARTDESCRIPTION_COLUMN_NAME = nameof(AUTOPARTDESCRIPTION_COLUMN_NAME);
+            public const string PRODUCERNAME_COLUMN_NAME = nameof(PRODUCERNAME_COLUMN_NAME);
+            public const string CARMODEL_COLUMN_NAME = nameof(CARMODEL_COLUMN_NAME);
+            public const string CARISSUEYEAR_COLUMN_NAME = nameof(CARISSUEYEAR_COLUMN_NAME);
+            public const string CARENGINE_COLUMN_NAME = nameof(CARENGINE_COLUMN_NAME);
+            public const string VENDORNAME_COLUMN_NAME = nameof(VENDORNAME_COLUMN_NAME);
         }
     }
 }
