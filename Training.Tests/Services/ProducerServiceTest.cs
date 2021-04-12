@@ -9,7 +9,7 @@ using Training.RA.Interfaces;
 using Training.SDK.DTO;
 using Training.SDK.EqualityComparers;
 using Training.SDK.Services;
-using Training.Service.Extensions;
+using Training.Service.Mapping;
 
 namespace Training.Tests.Services
 {
@@ -40,7 +40,7 @@ namespace Training.Tests.Services
             };
             
             var producerFixture = new ProducerFixture();
-            _mapper = MapperConfigurationExpression.CreateAutoMapper();
+            _mapper = MapperConfigurationProvider.Get().CreateMapper();
 
             _mockProducerRepository = new Mock<IProducerRepository>();
 

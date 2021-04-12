@@ -9,7 +9,7 @@ namespace Training.Service.Extensions
 {
     public static class RegisterRepositories
     {
-        public static void RegisterSqlRepositories(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection RegisterSqlRepositories(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<SqlDbContext>(options =>
             {
@@ -25,6 +25,8 @@ namespace Training.Service.Extensions
             services.AddScoped<IProducerRepository, SqlProducerRepository>();
 
             services.AddScoped<IVendorRepository, SqlVendorRepository>();
+
+            return services;
         }
     }
 }

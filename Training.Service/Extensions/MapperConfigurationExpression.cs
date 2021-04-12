@@ -1,22 +1,15 @@
-﻿using System;
-using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Training.Service.Mapping;
 
 namespace Training.Service.Extensions
 {
     public static class MapperConfigurationExpression
     {
-        private static readonly Action<IMapperConfigurationExpression> ConfigAction = m => m.AddProfile(new MappingProfile()); 
-
-        public static void AddAutoMapper(this IServiceCollection services)
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services)
         {
-            services.AddAutoMapper(ConfigAction, typeof(Startup));
-        }
+            var mapper = MapperConfigurationProvider.Get().CreateMapper();
 
-        public static IMapper CreateAutoMapper()
-        {
-            return new MapperConfiguration(ConfigAction).CreateMapper();
+            return services.AddSingleton(mapper);
         }
     }
 }
