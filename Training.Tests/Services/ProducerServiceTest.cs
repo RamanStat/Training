@@ -7,9 +7,9 @@ using NUnit.Framework;
 using Training.Data.Entities;
 using Training.RA.Interfaces;
 using Training.SDK.DTO;
-using Training.SDK.EqualityComparers;
-using Training.SDK.Services;
+using Training.Service.EqualityComparers;
 using Training.Service.Mapping;
+using Training.Service.Services;
 
 namespace Training.Tests.Services
 {

@@ -1,14 +1,14 @@
-﻿using AutoMapper;
-using ExcelDataReader;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using ExcelDataReader;
+using Microsoft.AspNetCore.Http;
 using Training.SDK.DTO;
 using Training.SDK.Interfaces;
 
-namespace Training.SDK.Services
+namespace Training.Service.Services
 {
     public class ExcelService : IExcelService
     {

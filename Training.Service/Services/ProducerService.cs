@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using MongoDB.Driver;
 using Training.Data.Entities;
 using Training.RA.Interfaces;
 using Training.SDK.DTO;
 using Training.SDK.Interfaces;
 
-namespace Training.SDK.Services
+namespace Training.Service.Services
 {
     public class ProducerService : IProducerService
     {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Training.SDK.Interfaces;
-using Training.SDK.Services;
+using Training.Service.Services;
+
 namespace Training.Service.Extensions
 {
     public static class RegisterServices

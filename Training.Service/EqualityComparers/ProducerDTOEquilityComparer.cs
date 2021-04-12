@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Training.SDK.DTO;
 
-namespace Training.SDK.EqualityComparers
+namespace Training.Service.EqualityComparers
 {
     public class ProducerDTOEquilityComparer : IEqualityComparer<ProducerDTO>
     {

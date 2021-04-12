@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Text.Json;
 using Training.Service.Extensions;
-using Training.SDK.Services;
 using Training.SDK.Interfaces;
 
 namespace Training.Service
