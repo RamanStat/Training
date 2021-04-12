@@ -3,7 +3,7 @@ using Training.Service.Mapping;
 
 namespace Training.Service.Extensions
 {
-    public static class MapperConfigurationExpression
+    public static class MapperConfiguration
     {
         public static IServiceCollection AddAutoMapper(this IServiceCollection services)
         {

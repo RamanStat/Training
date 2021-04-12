@@ -37,11 +37,7 @@ namespace Training.Service
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Training", Version = "v1" });
             });
 
-            services.AddAutoMapper().RegisterSqlRepositories(Configuration);
-
-            services.AddScoped<IExcelService, ExcelService>();
-
-            services.AddScoped<IProducerService, ProducerService>();
+            services.AddAutoMapper().RegisterSqlRepositories(Configuration).AddServices();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

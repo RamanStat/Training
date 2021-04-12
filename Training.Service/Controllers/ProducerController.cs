@@ -27,7 +27,7 @@ namespace Training.Service.Controllers
         {
             var producerDTO = await _producerService.GetProducerAsync(id);
 
-            if (producerDTO is null)
+            if (producerDTO == null)
             {
                 return NotFound();
             }
@@ -46,7 +46,7 @@ namespace Training.Service.Controllers
         {
             var newProducerDTO = await _producerService.UpdateProducerAsync(producerDTO);
 
-            if (newProducerDTO is null)
+            if (newProducerDTO == null)
             {
                 return NotFound();
             }
@@ -59,7 +59,7 @@ namespace Training.Service.Controllers
         {
             var producerDTO = await _producerService.DeleteProducerAsync(id);
 
-            if (producerDTO is null)
+            if (producerDTO == null)
             {
                 return NotFound();
             }
