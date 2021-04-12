@@ -43,7 +43,7 @@ namespace Training.RA.SQLRepositories
         {
             return await _context.Producers
                 .Include(p => p.Autoparts)
-                .FirstAsync(p => p.Id == id, cancellationToken);
+                .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
         }
 
         public async Task UpdateAsync(Producer entity, CancellationToken cancellationToken)
