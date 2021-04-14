@@ -8,7 +8,6 @@ using AutoMapper;
 using ExcelDataReader;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 using Training.SDK.DTO;
 using Training.SDK.Interfaces;
 using Training.Service.EqualityComparers;
@@ -27,33 +26,39 @@ namespace Training.Service.Services
 
         public async Task<IEnumerable<ExcelDTO>> ImportExcelFileAsync(IFormFile file)
         {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            await using var stream = new MemoryStream();
-            await file.CopyToAsync(stream);
-            using var reader = ExcelReaderFactory.CreateReader(stream);
-
-            var dataTable = reader.AsDataSet().Tables[0];
+            var dataTable = await GetDataTableFromExcelFile(file);
             var firstColumnNames = dataTable.Rows[0].ItemArray.Select(i => i.ToString()).ToArray();
             var dataRows = dataTable.AsEnumerable().Select(r => r.ItemArray.Select(i => i.ToString()).ToArray()).Skip(1).ToArray();
 
-            if (!ColumnValidation(firstColumnNames))
+            if (!ValidateExcelColumnNames(firstColumnNames))
             {
                 throw new ValidationException("Invalid column names");
             }
 
             var excelDTOs = _mapper.Map<ExcelDTO[]>(dataRows);
 
-            await DataValidation(excelDTOs);
+            await ValidateExcelDTOs(excelDTOs);
             
             return excelDTOs;
         }
 
-        private bool ColumnValidation(string[] cells)
+        private async Task<DataTable> GetDataTableFromExcelFile(IFormFile file)
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            await using var stream = new MemoryStream();
+            await file.CopyToAsync(stream);
+            using var reader = ExcelReaderFactory.CreateReader(stream);
+
+            return reader.AsDataSet().Tables[0];
+        }
+
+        private bool ValidateExcelColumnNames(string[] cells)
         {
             return new ExcelColumnNamesEqualityComparer().Equals(cells);
         }
 
-        private async Task DataValidation(ExcelDTO[] excelDTOs)
+        private async Task ValidateExcelDTOs(ExcelDTO[] excelDTOs)
         {
             var validator = new ExcelDTOValidator();
 

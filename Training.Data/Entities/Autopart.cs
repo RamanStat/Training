@@ -15,8 +15,7 @@ namespace Training.Data.Entities
         public double Price { get; set; }
 
         public Producer Producer { get; set; }
-
-
+        
         public ICollection<Vendor> Vendors { get; set; } = new List<Vendor>();
 
         public ICollection<Car> Cars { get; set; } = new List<Car>(); 
