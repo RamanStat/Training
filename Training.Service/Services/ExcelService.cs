@@ -8,6 +8,8 @@ using AutoMapper;
 using ExcelDataReader;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
+using Training.Data.Entities;
+using Training.RA.Interfaces;
 using Training.SDK.DTO;
 using Training.SDK.Interfaces;
 using Training.Service.EqualityComparers;
@@ -18,10 +20,12 @@ namespace Training.Service.Services
     public class ExcelService : IExcelService
     {
         private readonly IMapper _mapper;
+        private readonly IAutopartRepository _autopartRepository;
 
-        public ExcelService(IMapper mapper)
+        public ExcelService(IMapper mapper, IAutopartRepository autopartRepository)
         {
             _mapper = mapper;
+            _autopartRepository = autopartRepository;
         }
 
         public async Task<IEnumerable<ExcelDTO>> ImportExcelFileAsync(IFormFile file)
@@ -29,15 +33,19 @@ namespace Training.Service.Services
             var dataTable = await GetDataTableFromExcelFile(file);
             var firstColumnNames = dataTable.Rows[0].ItemArray.Select(i => i.ToString()).ToArray();
             var dataRows = dataTable.AsEnumerable().Select(r => r.ItemArray.Select(i => i.ToString()).ToArray()).Skip(1).ToArray();
-
+            
             if (!ValidateExcelColumnNames(firstColumnNames))
             {
                 throw new ValidationException("Invalid column names");
             }
 
-            var excelDTOs = _mapper.Map<ExcelDTO[]>(dataRows);
+            var excelDTOs = _mapper.Map<ExcelDTO[]>(dataRows).Distinct().ToArray();
 
             await ValidateExcelDTOs(excelDTOs);
+
+            var autopart = _mapper.Map<Autopart>(excelDTOs);
+
+            await _autopartRepository.CreateAsync(autopart);
             
             return excelDTOs;
         }
