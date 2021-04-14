@@ -36,25 +36,25 @@ namespace Training.Service.Services
 
         public async Task<IEnumerable<ExcelDTO>> ImportExcelFileAsync(IFormFile file)
         {
-            var dataTable = await GetDataTableFromExcelFile(file);
-            var firstColumnNames = dataTable.Rows[0].ItemArray.Select(i => i.ToString()).ToArray();
+            var dataTable = await GetDataTableFromExcelFileAsync(file);
+            var firstRowWithColumnNames = dataTable.Rows[0].ItemArray.Select(i => i.ToString()).ToArray();
             var dataRows = dataTable.AsEnumerable().Select(r => r.ItemArray.Select(i => i.ToString()).ToArray()).Skip(1).ToArray();
             
-            if (!ValidateExcelColumnNames(firstColumnNames))
+            if (!ValidateExcelColumnNamesAsync(firstRowWithColumnNames))
             {
                 throw new ValidationException("Invalid column names");
             }
 
             var excelDTOs = _mapper.Map<ExcelDTO[]>(dataRows).Distinct(new ExcelDTOEqualityComparer()).ToArray();
 
-            await ValidateExcelDTOs(excelDTOs);
+            await ValidateExcelDTOsAsync(excelDTOs);
 
-            await CreateAutoparts(excelDTOs);
+            await CreateAutopartsAsync(excelDTOs);
             
             return excelDTOs;
         }
 
-        private async Task<DataTable> GetDataTableFromExcelFile(IFormFile file)
+        private async Task<DataTable> GetDataTableFromExcelFileAsync(IFormFile file)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
@@ -65,12 +65,12 @@ namespace Training.Service.Services
             return reader.AsDataSet().Tables[0];
         }
 
-        private bool ValidateExcelColumnNames(string[] cells)
+        private bool ValidateExcelColumnNamesAsync(string[] cells)
         {
             return new ExcelColumnNamesEqualityComparer().Equals(cells);
         }
 
-        private async Task ValidateExcelDTOs(ExcelDTO[] excelDTOs)
+        private async Task ValidateExcelDTOsAsync(ExcelDTO[] excelDTOs)
         {
             var validator = new ExcelDTOValidator();
 
@@ -85,7 +85,7 @@ namespace Training.Service.Services
             }
         }
 
-        private async Task CreateAutoparts(ExcelDTO[] excelDTOs)
+        private async Task CreateAutopartsAsync(ExcelDTO[] excelDTOs)
         {
             foreach (var excelDTO in excelDTOs)
             {
