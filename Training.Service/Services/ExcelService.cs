@@ -19,12 +19,10 @@ namespace Training.Service.Services
     public class ExcelService : IExcelService
     {
         private readonly IMapper _mapper;
-        private readonly ILogger<ExcelService> _exceLogger;
 
-        public ExcelService(IMapper mapper, ILogger<ExcelService> exceLogger)
+        public ExcelService(IMapper mapper)
         {
             _mapper = mapper;
-            _exceLogger = exceLogger;
         }
 
         public async Task<IEnumerable<ExcelDTO>> ImportExcelFileAsync(IFormFile file)
