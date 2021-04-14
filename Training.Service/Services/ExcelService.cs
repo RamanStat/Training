@@ -21,11 +21,17 @@ namespace Training.Service.Services
     {
         private readonly IMapper _mapper;
         private readonly IAutopartRepository _autopartRepository;
+        private readonly IVendorRepository _vendorRepository;
+        private readonly IProducerRepository _producerRepository;
+        private readonly ICarRepository _carRepository;
 
-        public ExcelService(IMapper mapper, IAutopartRepository autopartRepository)
+        public ExcelService(IMapper mapper, IAutopartRepository autopartRepository, IVendorRepository vendorRepository, IProducerRepository producerRepository, ICarRepository carRepository)
         {
             _mapper = mapper;
             _autopartRepository = autopartRepository;
+            _vendorRepository = vendorRepository;
+            _producerRepository = producerRepository;
+            _carRepository = carRepository;
         }
 
         public async Task<IEnumerable<ExcelDTO>> ImportExcelFileAsync(IFormFile file)
@@ -43,9 +49,7 @@ namespace Training.Service.Services
 
             await ValidateExcelDTOs(excelDTOs);
 
-            var autopart = _mapper.Map<Autopart>(excelDTOs);
-
-            await _autopartRepository.CreateAsync(autopart);
+            await CreateAutoparts(excelDTOs);
             
             return excelDTOs;
         }
@@ -78,6 +82,27 @@ namespace Training.Service.Services
                 {
                     throw new ValidationException(result.Errors);
                 }
+            }
+        }
+
+        private async Task CreateAutoparts(ExcelDTO[] excelDTOs)
+        {
+            foreach (var excelDTO in excelDTOs)
+            {
+                var producer = await _producerRepository.GetProducerAndCreateIfNotExistAsync(excelDTO.ProducerName);
+
+                var vendor = await _vendorRepository.GetVendorAndCreateIfNotExistAsync(excelDTO.VendorName);
+
+                var car = await _carRepository.GetCarAndCreateIfNotExistAsync(excelDTO.CarModel, excelDTO.CarIssueYear, excelDTO.CarEngine);
+
+                var autopart = _mapper.Map<Autopart>(excelDTO);
+
+                autopart.Producer = producer;
+                autopart.ProducerId = producer.Id;
+                autopart.Cars.Add(car);
+                autopart.Vendors.Add(vendor);
+                
+                await _autopartRepository.CreateAsync(autopart);
             }
         }
     }

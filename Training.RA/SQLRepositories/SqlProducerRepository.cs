@@ -31,6 +31,22 @@ namespace Training.RA.SQLRepositories
             await _context.Instance.SaveChangesAsync(cancellationToken);
         }
 
+        public async Task<Producer> GetProducerAndCreateIfNotExistAsync(string producerName, CancellationToken cancellationToken)
+        {
+            var producer = await _context.Producers.FirstOrDefaultAsync(p => p.Name == producerName, cancellationToken);
+
+            if (producer != null) return producer;
+
+            producer = new Producer()
+            {
+                Name = producerName
+            };
+
+            await CreateAsync(producer, cancellationToken);
+
+            return producer;
+        }
+
         public async Task<IEnumerable<Producer>> GetAllAsync(CancellationToken cancellationToken)
         {
             return await _context.Producers
