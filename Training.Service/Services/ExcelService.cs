@@ -19,14 +19,14 @@ namespace Training.Service.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ExcelDTO>> ImportExcelFileAsync(IFormFile file, CancellationToken cancellationToken)
+        public async Task<IEnumerable<ExcelDTO>> ImportExcelFileAsync(IFormFile file)
         {
             var excelDTOs = new List<ExcelDTO>();
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             await using var stream = System.IO.File.Create(file.FileName);
-            await file.CopyToAsync(stream, cancellationToken);
+            await file.CopyToAsync(stream);
 
             using var reader = ExcelReaderFactory.CreateReader(stream);
             reader.Read();

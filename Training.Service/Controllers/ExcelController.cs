@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Training.RA.Interfaces;
 using Training.SDK.Interfaces;
 
 namespace Training.Service.Controllers
