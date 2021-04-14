@@ -4,7 +4,7 @@ using static Training.Service.Constants.ImportFileStructure;
 
 namespace Training.Service.EqualityComparers
 {
-    public class ArrayExcelColumnNamesEqualityComparer : IEquatable<string[]>
+    public class ExcelColumnNamesEqualityComparer : IEquatable<string[]>
     {
         public bool Equals(string[]? x)
         {
