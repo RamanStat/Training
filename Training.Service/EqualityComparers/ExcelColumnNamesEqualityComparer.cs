@@ -6,7 +6,7 @@ namespace Training.Service.EqualityComparers
 {
     public class ExcelColumnNamesEqualityComparer : IEquatable<string[]>
     {
-        public bool Equals(string[]? x)
+        public bool Equals(string[] x)
         {
             if (x == null || x.Length != COLUMN_COUNT)
             {
