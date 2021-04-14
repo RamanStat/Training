@@ -39,7 +39,7 @@ namespace Training.Service.Services
                 throw new ValidationException("Invalid column names");
             }
 
-            var excelDTOs = _mapper.Map<ExcelDTO[]>(dataRows).Distinct().ToArray();
+            var excelDTOs = _mapper.Map<ExcelDTO[]>(dataRows).Distinct(new ExcelDTOEqualityComparer()).ToArray();
 
             await ValidateExcelDTOs(excelDTOs);
 
