@@ -31,6 +31,24 @@ namespace Training.RA.SQLRepositories
             await _context.Instance.SaveChangesAsync(cancellationToken);
         }
 
+        public async Task<Car> GetCarAndCreateIfNotExistAsync(string carModel, int carIssuerYear, int carEngine, CancellationToken cancellationToken)
+        {
+            var car = await _context.Cars.FirstOrDefaultAsync(c => c.Model == carModel && c.IssueYear == carIssuerYear && c.Engine == carEngine, cancellationToken: cancellationToken);
+
+            if (car != null) return car;
+
+            car = new Car()
+            {
+                Model = carModel,
+                IssueYear = carIssuerYear,
+                Engine = carEngine
+            };
+
+            await CreateAsync(car, cancellationToken);
+
+            return car;
+        }
+
         public async Task<IEnumerable<Car>> GetAllAsync(CancellationToken cancellationToken)
         {
             return await _context.Cars
