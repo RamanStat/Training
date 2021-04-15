@@ -4,14 +4,14 @@
     {
         public static class ImportFileOffsets
         {
-            public const int AUTOPARTNAME_COLUMN_OFFSET = 0;
-            public const int AUTOPARTPRICE_COLUMN_OFFSET = 1;
-            public const int AUTOPARTDESCRIPTION_COLUMN_OFFSET = 2;
-            public const int PRODUCERNAME_COLUMN_OFFSET = 3;
-            public const int CARMODEL_COLUMN_OFFSET = 4;
-            public const int CARISSUEYEAR_COLUMN_OFFSET = 5;
-            public const int CARENGINE_COLUMN_OFFSET = 6;
-            public const int VENDORNAME_COLUMN_OFFSET = 7;
+            public const int AUTOPART_NAME_COLUMN_OFFSET = 0;
+            public const int AUTOPART_PRICE_COLUMN_OFFSET = 1;
+            public const int AUTOPART_DESCRIPTION_COLUMN_OFFSET = 2;
+            public const int PRODUCER_NAME_COLUMN_OFFSET = 3;
+            public const int CAR_MODEL_COLUMN_OFFSET = 4;
+            public const int CAR_ISSUE_YEAR_COLUMN_OFFSET = 5;
+            public const int CAR_ENGINE_COLUMN_OFFSET = 6;
+            public const int VENDOR_NAME_COLUMN_OFFSET = 7;
         }
 
         public static class ImportFileStructure
