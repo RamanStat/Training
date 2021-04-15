@@ -31,20 +31,9 @@ namespace Training.RA.SQLRepositories
             await _context.Instance.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<Vendor> GetVendorAndCreateIfNotExistAsync(string vendorName, CancellationToken cancellationToken)
+        public async Task<Vendor> GetVendorByNameAsync(string vendorName, CancellationToken cancellationToken)
         {
-            var vendor = await _context.Vendors.FirstOrDefaultAsync(p => p.Name == vendorName, cancellationToken);
-
-            if (vendor != null) return vendor;
-
-            vendor = new Vendor()
-            {
-                Name = vendorName
-            };
-
-            await CreateAsync(vendor, cancellationToken);
-
-            return vendor;
+            return await _context.Vendors.FirstOrDefaultAsync(p => p.Name == vendorName, cancellationToken);
         }
 
         public async Task<IEnumerable<Vendor>> GetAllAsync(CancellationToken cancellationToken)
