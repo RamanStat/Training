@@ -101,8 +101,7 @@ namespace Training.Service.Services
 
             if (errors.Count != 0)
             {
-                var list = string.Join("\n", errors);
-                throw new ValidationException(list);
+                throw new ValidationException(string.Join("\n", errors));
             }
         }
 
