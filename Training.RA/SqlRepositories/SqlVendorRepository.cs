@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,14 @@ namespace Training.RA.SQLRepositories
 
         public async Task<Vendor> GetVendorByNameAsync(string vendorName, CancellationToken cancellationToken)
         {
-            return await _context.Vendors.FirstOrDefaultAsync(p => p.Name == vendorName, cancellationToken);
+            var vendor = await _context.Vendors.FirstOrDefaultAsync(p => p.Name == vendorName, cancellationToken);
+
+            if (vendor == null)
+            {
+                throw new ValidationException($"Vendor with name: {vendorName} does not exists");
+            }
+
+            return vendor;
         }
 
         public async Task<IEnumerable<Vendor>> GetAllAsync(CancellationToken cancellationToken)

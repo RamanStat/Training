@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -33,11 +34,17 @@ namespace Training.RA.SQLRepositories
 
         public async Task<Car> GetCarByModelAndIssuerYearAndEngineAsync(string carModel, int carIssuerYear, int carEngine, CancellationToken cancellationToken)
         {
-            return await _context.Cars
-                .FirstOrDefaultAsync(c => c.Model == carModel
-                        && c.IssueYear == carIssuerYear 
-                        && c.Engine == carEngine, 
-                        cancellationToken);
+            var car = await _context.Cars
+                .FirstOrDefaultAsync(c => c.Model == carModel&& c.IssueYear == carIssuerYear && c.Engine == carEngine, 
+                    cancellationToken);
+
+            if (car == null)
+            {
+                throw new ValidationException($"Car with Model: {carModel}, IssuerYear: {carIssuerYear} " +
+                                              $"and Engine {carEngine} does not exist");
+            }
+
+            return car;
         }
 
         public async Task<IEnumerable<Car>> GetAllAsync(CancellationToken cancellationToken)

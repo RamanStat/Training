@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,15 @@ namespace Training.RA.SQLRepositories
 
         public async Task<Producer> GetProducerByNameAsync(string producerName, CancellationToken cancellationToken)
         { 
-            return await _context.Producers.FirstOrDefaultAsync(p => p.Name == producerName, cancellationToken);
+            var producer = await _context.Producers
+                .FirstOrDefaultAsync(p => p.Name == producerName, cancellationToken);
+
+            if (producer == null)
+            {
+                throw new ValidationException($"Producer with name: {producerName} does not exists");
+            }
+
+            return producer;
         }
 
         public async Task<IEnumerable<Producer>> GetAllAsync(CancellationToken cancellationToken)
