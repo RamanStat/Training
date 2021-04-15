@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ExcelDataReader;
 using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Training.Data.Entities;
 using Training.RA.Interfaces;
@@ -80,18 +82,27 @@ namespace Training.Service.Services
             return new ExcelColumnOrderWithNamesEqualityComparer().Equals(cells);
         }
 
-        private static async Task ValidateDataRowsAsync(IEnumerable<string[]> dataRows)
+        private static async Task ValidateDataRowsAsync(string[][] dataRows)
         {
+            var errors = new List<string>();
+
             var validator = new ExcelDataRowsValidator();
 
-            foreach (var excelDTO in dataRows)
+            for (var i = 0; i < dataRows.Length; i++)
             {
-                var result = await validator.ValidateAsync(excelDTO);
+                var result = await validator.ValidateAsync(dataRows[i]);
 
                 if (!result.IsValid)
                 {
-                    throw new ValidationException(result.Errors);
+                    errors.Add($"Number of row is {i + 1}\n" +
+                               $"{string.Join("\n", result.Errors.Select(e => e.ErrorMessage))}");
                 }
+            }
+
+            if (errors.Count != 0)
+            {
+                var list = string.Join("\n", errors);
+                throw new ValidationException(list);
             }
         }
 
@@ -119,11 +130,14 @@ namespace Training.Service.Services
                     await _autopartRepository.CreateAsync(autopart);
                 }
 
+                throw new Exception();
+
                 await transaction.CommitAsync();
             }
             catch
             {
                 await transaction.RollbackAsync();
+                throw;
             }
         }
     }
