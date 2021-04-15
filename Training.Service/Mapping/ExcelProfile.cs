@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Training.Data.Entities;
 using Training.SDK.DTO;
+using static Training.Service.Constants.ImportFileOffsets;
 
 namespace Training.Service.Mapping
 {
@@ -9,14 +10,14 @@ namespace Training.Service.Mapping
         public ExcelProfile()
         {
             CreateMap<string[], ExcelDTO>()
-                .ForMember(e => e.AutopartName, source => source.MapFrom(s => s[Constants.ImportFileOffsets.AUTOPARTNAME_COLUMN_OFFSET]))
-                .ForMember(e => e.AutopartPrice, source => source.MapFrom(s => double.Parse(s[Constants.ImportFileOffsets.AUTOPARTPRICE_COLUMN_OFFSET])))
-                .ForMember(e => e.AutopartDescription, source => source.MapFrom(s => s[Constants.ImportFileOffsets.AUTOPARTDESCRIPTION_COLUMN_OFFSET]))
-                .ForMember(e => e.ProducerName, source => source.MapFrom(s => s[Constants.ImportFileOffsets.PRODUCERNAME_COLUMN_OFFSET]))
-                .ForMember(e => e.CarModel, source => source.MapFrom(s => s[Constants.ImportFileOffsets.CARMODEL_COLUMN_OFFSET]))
-                .ForMember(e => e.CarIssueYear, source => source.MapFrom(s => int.Parse(s[Constants.ImportFileOffsets.CARISSUEYEAR_COLUMN_OFFSET])))
-                .ForMember(e => e.CarEngine, source => source.MapFrom(s => int.Parse(s[Constants.ImportFileOffsets.CARENGINE_COLUMN_OFFSET])))
-                .ForMember(e => e.VendorName, source => source.MapFrom(s => s[Constants.ImportFileOffsets.VENDORNAME_COLUMN_OFFSET]))
+                .ForMember(e => e.AutopartName, source => source.MapFrom(s => s[AUTOPART_NAME_COLUMN_OFFSET]))
+                .ForMember(e => e.AutopartPrice, source => source.MapFrom(s => double.Parse(s[AUTOPART_PRICE_COLUMN_OFFSET])))
+                .ForMember(e => e.AutopartDescription, source => source.MapFrom(s => s[AUTOPART_DESCRIPTION_COLUMN_OFFSET]))
+                .ForMember(e => e.ProducerName, source => source.MapFrom(s => s[PRODUCER_NAME_COLUMN_OFFSET]))
+                .ForMember(e => e.CarModel, source => source.MapFrom(s => s[CAR_MODEL_COLUMN_OFFSET]))
+                .ForMember(e => e.CarIssueYear, source => source.MapFrom(s => int.Parse(s[CAR_ISSUE_YEAR_COLUMN_OFFSET])))
+                .ForMember(e => e.CarEngine, source => source.MapFrom(s => int.Parse(s[CAR_ENGINE_COLUMN_OFFSET])))
+                .ForMember(e => e.VendorName, source => source.MapFrom(s => s[VENDOR_NAME_COLUMN_OFFSET]))
                 .ReverseMap();
 
             CreateMap<ExcelDTO, Autopart>()
