@@ -24,6 +24,7 @@ namespace Training.Service.Services
         private readonly IVendorRepository _vendorRepository;
         private readonly IProducerRepository _producerRepository;
         private readonly ICarRepository _carRepository;
+        private readonly string _validColumnOrderWithNames = "AUTOPARTNAME-AUTOPARTPRICE-AUTOPARTDESCRIPTION-PRODUCERNAME-CARMODEL-CARISSUEYEAR-CARENGINE-VENDORNAME";
 
         public ExcelService(IMapper mapper, IAutopartRepository autopartRepository, IVendorRepository vendorRepository, IProducerRepository producerRepository, ICarRepository carRepository)
         {
@@ -40,9 +41,9 @@ namespace Training.Service.Services
             var firstRowWithColumnNames = dataTable.Rows[0].ItemArray.Select(i => i.ToString()).ToArray();
             var dataRows = dataTable.AsEnumerable().Select(r => r.ItemArray.Select(i => i.ToString()).ToArray()).Skip(1).ToArray();
             
-            if (!ValidateExcelColumnNamesAsync(firstRowWithColumnNames))
+            if (!ValidateExcelColumnOrderWithNamesAsync(firstRowWithColumnNames))
             {
-                throw new ValidationException("Invalid column names");
+                throw new ValidationException($"Invalid columns.\n Must be {_validColumnOrderWithNames}");
             }
 
             var excelDTOs = _mapper.Map<ExcelDTO[]>(dataRows).Distinct(new ExcelDTOEqualityComparer()).ToArray();
@@ -65,9 +66,9 @@ namespace Training.Service.Services
             return reader.AsDataSet().Tables[0];
         }
 
-        private bool ValidateExcelColumnNamesAsync(string[] cells)
+        private bool ValidateExcelColumnOrderWithNamesAsync(string[] cells)
         {
-            return new ExcelColumnNamesEqualityComparer().Equals(cells);
+            return new ExcelColumnOrderWithNamesEqualityComparer().Equals(cells);
         }
 
         private async Task ValidateExcelDTOsAsync(ExcelDTO[] excelDTOs)
