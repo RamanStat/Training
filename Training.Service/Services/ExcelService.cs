@@ -65,9 +65,9 @@ namespace Training.Service.Services
 
             var dataRows = dataTable.AsEnumerable().Select(r => r.ItemArray.Select(i => i.ToString()).ToArray()).Skip(1).ToArray();
 
-            if (!ValidateExcelColumnOrderWithNamesAsync(firstRowWithColumnNames))
+            if (!ValidateExcelColumnNamesWithOrderAsync(firstRowWithColumnNames))
             {
-                throw new ValidationException($"Invalid columns.\n Must be {VALID_COLUMN_ORDER_WITH_NAMES}");
+                throw new ValidationException($"Invalid columns.\n Must be {VALID_COLUMN_NAMES_WITH_ORDER}");
             }
 
             await ValidateDataRowsAsync(dataRows);
@@ -75,9 +75,9 @@ namespace Training.Service.Services
             return dataRows;
         }
 
-        private static bool ValidateExcelColumnOrderWithNamesAsync(string[] cells)
+        private static bool ValidateExcelColumnNamesWithOrderAsync(string[] cells)
         {
-            return new ExcelColumnOrderWithNamesEqualityComparer().Equals(cells);
+            return new ExcelColumnNamesWithOrderEqualityComparer().Equals(cells);
         }
 
         private static async Task ValidateDataRowsAsync(string[][] dataRows)

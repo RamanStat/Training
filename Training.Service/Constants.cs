@@ -17,7 +17,7 @@
         public static class ImportFileStructure
         {
             public const int COLUMN_COUNT = 8;
-            public const string VALID_COLUMN_ORDER_WITH_NAMES =
+            public const string VALID_COLUMN_NAMES_WITH_ORDER =
                 "AUTOPARTNAME-AUTOPARTPRICE-AUTOPARTDESCRIPTION-PRODUCERNAME-CARMODEL-CARISSUEYEAR-CARENGINE-VENDORNAME";
             public const string AUTOPARTNAME_COLUMN_NAME = nameof(AUTOPARTNAME_COLUMN_NAME);
             public const string AUTOPARTPRICE_COLUMN_NAME = nameof(AUTOPARTPRICE_COLUMN_NAME);
