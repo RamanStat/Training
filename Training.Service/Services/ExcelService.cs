@@ -39,23 +39,16 @@ namespace Training.Service.Services
         public async Task<IEnumerable<ExcelDTO>> ImportExcelFileAsync(IFormFile file)
         {
             var dataTable = await GetDataTableFromExcelFileAsync(file);
-            var firstRowWithColumnNames = dataTable.Rows[0].ItemArray.Select(i => i.ToString()).ToArray();
-            var dataRows = dataTable.AsEnumerable().Select(r => r.ItemArray.Select(i => i.ToString()).ToArray()).Skip(1).ToArray();
+
+            var dataRows = await ValidateExcelDataTableAndGetDataRowsAsync(dataTable);
             
-            if (!ValidateExcelColumnOrderWithNamesAsync(firstRowWithColumnNames))
-            {
-                throw new ValidationException($"Invalid columns.\n Must be {_validColumnOrderWithNames}");
-            }
-
             var excelDTOs = _mapper.Map<ExcelDTO[]>(dataRows).Distinct(new ExcelDTOEqualityComparer()).ToArray();
-
-            await ValidateExcelDTOsAsync(excelDTOs);
 
             await CreateAutopartsAsync(excelDTOs);
             
             return excelDTOs;
         }
-
+        
         private async Task<DataTable> GetDataTableFromExcelFileAsync(IFormFile file)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -67,16 +60,32 @@ namespace Training.Service.Services
             return reader.AsDataSet().Tables[0];
         }
 
+        private async Task<string[][]> ValidateExcelDataTableAndGetDataRowsAsync(DataTable dataTable)
+        {
+            var firstRowWithColumnNames = dataTable.Rows[0].ItemArray.Select(i => i.ToString()).ToArray();
+
+            var dataRows = dataTable.AsEnumerable().Select(r => r.ItemArray.Select(i => i.ToString()).ToArray()).Skip(1).ToArray();
+
+            if (!ValidateExcelColumnOrderWithNamesAsync(firstRowWithColumnNames))
+            {
+                throw new ValidationException($"Invalid columns.\n Must be {_validColumnOrderWithNames}");
+            }
+
+            await ValidateDataRowsAsync(dataRows);
+
+            return dataRows;
+        }
+
         private bool ValidateExcelColumnOrderWithNamesAsync(string[] cells)
         {
             return new ExcelColumnOrderWithNamesEqualityComparer().Equals(cells);
         }
 
-        private async Task ValidateExcelDTOsAsync(ExcelDTO[] excelDTOs)
+        private async Task ValidateDataRowsAsync(string[][] dataRows)
         {
-            var validator = new ExcelDTOValidator();
+            var validator = new ExcelDataRowsValidator();
 
-            foreach (var excelDTO in excelDTOs)
+            foreach (var excelDTO in dataRows)
             {
                 var result = await validator.ValidateAsync(excelDTO);
 
@@ -116,7 +125,6 @@ namespace Training.Service.Services
             catch
             {
                 await transaction.RollbackAsync();
-                throw;
             }
         }
     }
