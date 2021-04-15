@@ -103,11 +103,11 @@ namespace Training.Service.Services
             {
                 foreach (var excelDTO in excelDTOs)
                 {
-                    var producer = await _producerRepository.GetProducerAndCreateIfNotExistAsync(excelDTO.ProducerName);
+                    var producer = await _producerRepository.GetProducerByNameAsync(excelDTO.ProducerName);
 
-                    var vendor = await _vendorRepository.GetVendorAndCreateIfNotExistAsync(excelDTO.VendorName);
+                    var vendor = await _vendorRepository.GetVendorByNameAsync(excelDTO.VendorName);
 
-                    var car = await _carRepository.GetCarAndCreateIfNotExistAsync(excelDTO.CarModel, excelDTO.CarIssueYear, excelDTO.CarEngine);
+                    var car = await _carRepository.GetCarByModelAndIssuerYearAndEngineAsync(excelDTO.CarModel, excelDTO.CarIssueYear, excelDTO.CarEngine);
 
                     var autopart = _mapper.Map<Autopart>(excelDTO);
 

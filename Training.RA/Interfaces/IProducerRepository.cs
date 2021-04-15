@@ -6,6 +6,6 @@ namespace Training.RA.Interfaces
 {
     public interface IProducerRepository : IRepository<Producer>
     {
-        Task<Producer> GetProducerAndCreateIfNotExistAsync(string producerName, CancellationToken cancellationToken = default);
+        Task<Producer> GetProducerByNameAsync(string producerName, CancellationToken cancellationToken = default);
     }
 }

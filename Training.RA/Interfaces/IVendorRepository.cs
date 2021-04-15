@@ -6,6 +6,6 @@ namespace Training.RA.Interfaces
 {
     public interface IVendorRepository : IRepository<Vendor>
     {
-        Task<Vendor> GetVendorAndCreateIfNotExistAsync(string vendorName, CancellationToken cancellationToken = default);
+        Task<Vendor> GetVendorByNameAsync(string vendorName, CancellationToken cancellationToken = default);
     }
 }
