@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -15,6 +14,7 @@ using Training.SDK.DTO;
 using Training.SDK.Interfaces;
 using Training.Service.EqualityComparers;
 using Training.Service.Validators;
+using static Training.Service.Constants.ImportFileStructure;
 
 namespace Training.Service.Services
 {
@@ -25,7 +25,6 @@ namespace Training.Service.Services
         private readonly IVendorRepository _vendorRepository;
         private readonly IProducerRepository _producerRepository;
         private readonly ICarRepository _carRepository;
-        private readonly string _validColumnOrderWithNames = "AUTOPARTNAME-AUTOPARTPRICE-AUTOPARTDESCRIPTION-PRODUCERNAME-CARMODEL-CARISSUEYEAR-CARENGINE-VENDORNAME";
 
         public ExcelService(IMapper mapper, IAutopartRepository autopartRepository, IVendorRepository vendorRepository, IProducerRepository producerRepository, ICarRepository carRepository)
         {
@@ -49,7 +48,7 @@ namespace Training.Service.Services
             return excelDTOs;
         }
         
-        private async Task<DataTable> GetDataTableFromExcelFileAsync(IFormFile file)
+        private static async Task<DataTable> GetDataTableFromExcelFileAsync(IFormFile file)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
@@ -60,7 +59,7 @@ namespace Training.Service.Services
             return reader.AsDataSet().Tables[0];
         }
 
-        private async Task<string[][]> ValidateExcelDataTableAndGetDataRowsAsync(DataTable dataTable)
+        private static async Task<string[][]> ValidateExcelDataTableAndGetDataRowsAsync(DataTable dataTable)
         {
             var firstRowWithColumnNames = dataTable.Rows[0].ItemArray.Select(i => i.ToString()).ToArray();
 
@@ -68,7 +67,7 @@ namespace Training.Service.Services
 
             if (!ValidateExcelColumnOrderWithNamesAsync(firstRowWithColumnNames))
             {
-                throw new ValidationException($"Invalid columns.\n Must be {_validColumnOrderWithNames}");
+                throw new ValidationException($"Invalid columns.\n Must be {VALID_COLUMN_ORDER_WITH_NAMES}");
             }
 
             await ValidateDataRowsAsync(dataRows);
@@ -76,12 +75,12 @@ namespace Training.Service.Services
             return dataRows;
         }
 
-        private bool ValidateExcelColumnOrderWithNamesAsync(string[] cells)
+        private static bool ValidateExcelColumnOrderWithNamesAsync(string[] cells)
         {
             return new ExcelColumnOrderWithNamesEqualityComparer().Equals(cells);
         }
 
-        private async Task ValidateDataRowsAsync(string[][] dataRows)
+        private static async Task ValidateDataRowsAsync(IEnumerable<string[]> dataRows)
         {
             var validator = new ExcelDataRowsValidator();
 
