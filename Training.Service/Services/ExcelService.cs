@@ -128,9 +128,7 @@ namespace Training.Service.Services
 
                     await _autopartRepository.CreateAsync(autopart);
                 }
-
-                throw new Exception();
-
+                
                 await transaction.CommitAsync();
             }
             catch
