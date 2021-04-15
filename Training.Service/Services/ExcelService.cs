@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -88,22 +89,34 @@ namespace Training.Service.Services
 
         private async Task CreateAutopartsAsync(ExcelDTO[] excelDTOs)
         {
-            foreach (var excelDTO in excelDTOs)
+            var transaction = await _autopartRepository.BeginTransaction();
+
+            try
             {
-                var producer = await _producerRepository.GetProducerAndCreateIfNotExistAsync(excelDTO.ProducerName);
+                foreach (var excelDTO in excelDTOs)
+                {
+                    var producer = await _producerRepository.GetProducerAndCreateIfNotExistAsync(excelDTO.ProducerName);
 
-                var vendor = await _vendorRepository.GetVendorAndCreateIfNotExistAsync(excelDTO.VendorName);
+                    var vendor = await _vendorRepository.GetVendorAndCreateIfNotExistAsync(excelDTO.VendorName);
 
-                var car = await _carRepository.GetCarAndCreateIfNotExistAsync(excelDTO.CarModel, excelDTO.CarIssueYear, excelDTO.CarEngine);
+                    var car = await _carRepository.GetCarAndCreateIfNotExistAsync(excelDTO.CarModel, excelDTO.CarIssueYear, excelDTO.CarEngine);
 
-                var autopart = _mapper.Map<Autopart>(excelDTO);
+                    var autopart = _mapper.Map<Autopart>(excelDTO);
 
-                autopart.Producer = producer;
-                autopart.ProducerId = producer.Id;
-                autopart.Cars.Add(car);
-                autopart.Vendors.Add(vendor);
-                
-                await _autopartRepository.CreateAsync(autopart);
+                    autopart.Producer = producer;
+                    autopart.ProducerId = producer.Id;
+                    autopart.Cars.Add(car);
+                    autopart.Vendors.Add(vendor);
+
+                    await _autopartRepository.CreateAsync(autopart);
+                }
+
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
             }
         }
     }

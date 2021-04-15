@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Training.Data.Entities;
 using Training.RA.Interfaces;
 
@@ -29,6 +30,11 @@ namespace Training.RA.SQLRepositories
         {
             _context.Autoparts.Remove(entity);
             await _context.Instance.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<IDbContextTransaction> BeginTransaction()
+        {
+            return await _context.Instance.Database.BeginTransactionAsync();
         }
 
         public async Task<IEnumerable<Autopart>> GetAllAsync(CancellationToken cancellationToken)
