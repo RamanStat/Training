@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Training.RA.DbContexts;
 using Training.RA.Interfaces;
-using Training.RA.SQLRepositories;
+using Training.RA.SqlRepositories;
 
 namespace Training.Service.Extensions
 {

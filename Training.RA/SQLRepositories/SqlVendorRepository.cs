@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Training.Data.Entities;
 using Training.RA.Interfaces;
 
-namespace Training.RA.SQLRepositories
+namespace Training.RA.SqlRepositories
 {
     public class SqlVendorRepository : IVendorRepository
     {
