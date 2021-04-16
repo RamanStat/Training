@@ -57,6 +57,7 @@ namespace Training.RA.SqlRepositories
         {
             return await _context.Producers
                 .Include(p => p.Autoparts)
+                .ThenInclude(a => a.Cars)
                 .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
         }
 

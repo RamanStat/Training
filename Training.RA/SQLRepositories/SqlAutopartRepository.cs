@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +36,16 @@ namespace Training.RA.SqlRepositories
         public async Task<IDbContextTransaction> BeginTransaction()
         {
             return await _context.Instance.Database.BeginTransactionAsync();
+        }
+
+        public async Task<List<Autopart>> GetByProducerIdAsync(int producerId)
+        {
+            return await _context.Autoparts
+                .Where(a => a.ProducerId == producerId)
+                .Include(a => a.Producer)
+                .Include(a => a.Cars)
+                .Include(a => a.Vendors)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Autopart>> GetAllAsync(CancellationToken cancellationToken)

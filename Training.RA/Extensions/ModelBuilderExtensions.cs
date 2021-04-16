@@ -26,11 +26,6 @@ namespace Training.RA.Extensions
                 new Car() { Id = 2, Brand = "Mercedes", Model = "GLE", Engine = (int)EngineIdentifiers.Diesel, IssueYear = 2020 },
                 new Car() { Id = 3, Brand = "BMW", Model = "X5", Engine = (int)EngineIdentifiers.Diesel, IssueYear = 2020 },
                 new Car() { Id = 4, Brand = "BMW", Model = "X7", Engine = (int)EngineIdentifiers.Diesel, IssueYear = 2021 });
-
-            modelBuilder.Entity<Autopart>().HasData(
-                new Autopart() { Id = 1, ProducerId = 2, Name = "Battery", Description = "Battery Edcon DC35300R 35 A/h", Price = 100 },
-                new Autopart() { Id = 2, ProducerId = 1, Name = "Gear box cushion", Description = "Automatic transmission", Price = 10.5 },
-                new Autopart() { Id = 3, ProducerId = 1, Name = "Disc brake kit", Description = "Diameter 322, Installation side - fornt axle", Price = 10.1 });
         }
     }
 }

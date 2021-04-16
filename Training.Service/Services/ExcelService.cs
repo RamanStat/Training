@@ -6,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using ClosedXML.Excel;
 using ExcelDataReader;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Training.Data.Entities;
+using Training.RA;
 using Training.RA.Interfaces;
 using Training.SDK.DTO;
 using Training.SDK.Interfaces;
@@ -17,6 +19,7 @@ using Training.Service.EqualityComparers;
 using Training.Service.ExcelValidator.ConcreteExcel;
 using Training.Service.Validators;
 using static Training.Service.Constants.ImportFileColumnNames;
+using static Training.Service.Constants.ImportFileOffsets;
 
 namespace Training.Service.Services
 {
@@ -42,14 +45,62 @@ namespace Training.Service.Services
             var dataTable = await GetDataTableFromExcelFileAsync(file);
 
             var dataRows = await ValidateExcelDataTableAndGetDataRowsAsync(dataTable);
-            
+
             var excelDTOs = _mapper.Map<ExcelDTO[]>(dataRows).Distinct(new ExcelDTOEqualityComparer()).ToArray();
 
             await CreateAutopartsAsync(excelDTOs);
-            
+
             return excelDTOs;
         }
-        
+
+        public async Task<byte[]> ExportAutopartsByProducerIdAsync(int producerId)
+        {
+            var autoparts = await _autopartRepository.GetByProducerIdAsync(producerId);
+            using var workbook = new XLWorkbook();
+
+            var worksheet = workbook.Worksheets.Add("Producer");
+            worksheet.Cell(TABLE_ROW_OFFSET, AUTOPART_NAME_COLUMN_OFFSET + 1).Value = AUTOPART_NAME_COLUMN;
+            worksheet.Cell(TABLE_ROW_OFFSET, AUTOPART_PRICE_COLUMN_OFFSET + 1).Value = AUTOPART_PRICE_COLUMN;
+            worksheet.Cell(TABLE_ROW_OFFSET, AUTOPART_DESCRIPTION_COLUMN_OFFSET + 1).Value = AUTOPART_DESCRIPTION_COLUMN;
+            worksheet.Cell(TABLE_ROW_OFFSET, PRODUCER_NAME_COLUMN_OFFSET + 1).Value = PRODUCER_NAME_COLUMN;
+            worksheet.Cell(TABLE_ROW_OFFSET, CAR_MODEL_COLUMN_OFFSET + 1).Value = CAR_MODEL_COLUMN;
+            worksheet.Cell(TABLE_ROW_OFFSET, CAR_ISSUE_YEAR_COLUMN_OFFSET + 1).Value = CAR_ISSUE_YEAR_COLUMN;
+            worksheet.Cell(TABLE_ROW_OFFSET, CAR_ENGINE_COLUMN_OFFSET + 1).Value = CAR_ENGINE_COLUMN;
+            worksheet.Cell(TABLE_ROW_OFFSET, VENDOR_NAME_COLUMN_OFFSET + 1).Value = VENDOR_NAME_COLUMN;
+
+            for (var i = 0; i < autoparts.Count; i++)
+            {
+                for (var j = 0; j < autoparts[i].Cars.Count; j++)
+                {
+                    for (var k = 0; k < autoparts[i].Vendors.Count; k++)
+                    {
+                        worksheet.Cell(TABLE_ROW_OFFSET + i + 1, AUTOPART_NAME_COLUMN_OFFSET + 1).Value =
+                            autoparts[i].Name;
+                        worksheet.Cell(TABLE_ROW_OFFSET + i + 1, AUTOPART_PRICE_COLUMN_OFFSET + 1).Value =
+                            autoparts[i].Price;
+                        worksheet.Cell(TABLE_ROW_OFFSET + i + 1, AUTOPART_DESCRIPTION_COLUMN_OFFSET + 1).Value =
+                            autoparts[i].Description;
+                        worksheet.Cell(TABLE_ROW_OFFSET + i + 1, PRODUCER_NAME_COLUMN_OFFSET + 1).Value =
+                            autoparts[i].Producer.Name;
+                        worksheet.Cell(TABLE_ROW_OFFSET + i + 1, CAR_MODEL_COLUMN_OFFSET + 1).Value =
+                            autoparts[i].Cars.ElementAt(j).Model;
+                        worksheet.Cell(TABLE_ROW_OFFSET + i + 1, CAR_ISSUE_YEAR_COLUMN_OFFSET + 1).Value =
+                            autoparts[i].Cars.ElementAt(j).IssueYear;
+                        worksheet.Cell(TABLE_ROW_OFFSET + i + 1, CAR_ENGINE_COLUMN_OFFSET + 1).Value =
+                            (EngineIdentifiers)autoparts[i].Cars.ElementAt(j).Engine;
+                        worksheet.Cell(TABLE_ROW_OFFSET + i + 1, VENDOR_NAME_COLUMN_OFFSET + 1).Value =
+                            autoparts[i].Vendors.ElementAt(k).Name;
+                    }
+                }
+            }
+
+            worksheet.Columns("A", "Z").AdjustToContents();
+            await using var stream = new MemoryStream();
+            workbook.SaveAs(stream);
+
+            return stream.ToArray();
+        }
+
         private static async Task<DataTable> GetDataTableFromExcelFileAsync(IFormFile file)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -66,7 +117,7 @@ namespace Training.Service.Services
             var firstRowWithColumnNames = dataTable.Rows[TABLE_ROW_OFFSET - 1].ItemArray.Select(i => i.ToString()).ToArray();
 
             var dataRows = dataTable.AsEnumerable().Select(r => r.ItemArray.Select(i => i.ToString()).ToArray()).Skip(TABLE_ROW_OFFSET).ToArray();
-            
+
             await ValidateExcelColumnNamesWithOrderAsync(firstRowWithColumnNames);
 
             await ValidateDataRowsAsync(dataRows);
@@ -127,7 +178,7 @@ namespace Training.Service.Services
 
                     await _autopartRepository.CreateAsync(autopart);
                 }
-                
+
                 await transaction.CommitAsync();
             }
             catch
