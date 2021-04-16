@@ -66,18 +66,18 @@ namespace Training.Service.Services
 
             var dataRows = dataTable.AsEnumerable().Select(r => r.ItemArray.Select(i => i.ToString()).ToArray()).Skip(TABLE_ROW_OFFSET).ToArray();
             
-            await Task.Run(async () => ValidateExcelColumnNamesWithOrderAsync(firstRowWithColumnNames));
+            await ValidateExcelColumnNamesWithOrderAsync(firstRowWithColumnNames);
 
             await ValidateDataRowsAsync(dataRows);
 
             return dataRows;
         }
 
-        private static void ValidateExcelColumnNamesWithOrderAsync(string[] cells)
+        private static async Task ValidateExcelColumnNamesWithOrderAsync(string[] cells)
         {
             var excel = new ExadelExcelValidator(cells);
 
-            excel.ValidateColumnNames();
+            await excel.ValidateColumnNames();
         }
 
         private static async Task ValidateDataRowsAsync(string[][] dataRows)

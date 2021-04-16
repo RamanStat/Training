@@ -1,4 +1,5 @@
-﻿using static Training.Service.Constants.ImportFileColumnNames;
+﻿using System.Threading.Tasks;
+using static Training.Service.Constants.ImportFileColumnNames;
 using static Training.Service.Constants.ImportFileOffsets;
 
 namespace Training.Service.ExcelValidator
@@ -12,7 +13,7 @@ namespace Training.Service.ExcelValidator
             _cells = cells;
         }
 
-        public abstract void ValidateColumnNames();
+        public abstract Task ValidateColumnNames();
 
         protected virtual string ValidateAutopartName()
         {

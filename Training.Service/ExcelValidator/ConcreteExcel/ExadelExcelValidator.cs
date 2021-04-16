@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FluentValidation;
 
 namespace Training.Service.ExcelValidator.ConcreteExcel
@@ -10,7 +11,7 @@ namespace Training.Service.ExcelValidator.ConcreteExcel
         {
         }
 
-        public override void ValidateColumnNames()
+        public override Task ValidateColumnNames()
         {
             var errors = new List<string>()
             {
@@ -31,6 +32,8 @@ namespace Training.Service.ExcelValidator.ConcreteExcel
             {
                 throw new ValidationException(string.Join("\n", errors));
             }
+
+            return Task.CompletedTask;
         }
     }
 }
