@@ -7,8 +7,6 @@ using Microsoft.OpenApi.Models;
 using System.Text.Json;
 using FluentValidation.AspNetCore;
 using Training.Service.Extensions;
-using Training.SDK.Interfaces;
-using Training.Service.Validators;
 
 namespace Training.Service
 {
@@ -47,6 +45,8 @@ namespace Training.Service
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Training v1"));
             }
+
+            app.UseGlobalExceptionMiddleware();
 
             app.UseHttpsRedirection();
 

@@ -13,8 +13,9 @@ using Training.RA.Interfaces;
 using Training.SDK.DTO;
 using Training.SDK.Interfaces;
 using Training.Service.EqualityComparers;
+using Training.Service.ExcelValidator.ConcreteExcel;
 using Training.Service.Validators;
-using static Training.Service.Constants.ImportFileStructure;
+using static Training.Service.Constants.ImportFileColumnNames;
 
 namespace Training.Service.Services
 {
@@ -61,23 +62,22 @@ namespace Training.Service.Services
 
         private static async Task<string[][]> ValidateExcelDataTableAndGetDataRowsAsync(DataTable dataTable)
         {
-            var firstRowWithColumnNames = dataTable.Rows[0].ItemArray.Select(i => i.ToString()).ToArray();
+            var firstRowWithColumnNames = dataTable.Rows[TABLE_ROW_OFFSET - 1].ItemArray.Select(i => i.ToString()).ToArray();
 
-            var dataRows = dataTable.AsEnumerable().Select(r => r.ItemArray.Select(i => i.ToString()).ToArray()).Skip(1).ToArray();
-
-            if (!ValidateExcelColumnNamesWithOrderAsync(firstRowWithColumnNames))
-            {
-                throw new ValidationException($"Invalid columns.\n Must be {VALID_COLUMN_NAMES_WITH_ORDER}");
-            }
+            var dataRows = dataTable.AsEnumerable().Select(r => r.ItemArray.Select(i => i.ToString()).ToArray()).Skip(TABLE_ROW_OFFSET).ToArray();
+            
+            await Task.Run(async () => ValidateExcelColumnNamesWithOrderAsync(firstRowWithColumnNames));
 
             await ValidateDataRowsAsync(dataRows);
 
             return dataRows;
         }
 
-        private static bool ValidateExcelColumnNamesWithOrderAsync(string[] cells)
+        private static void ValidateExcelColumnNamesWithOrderAsync(string[] cells)
         {
-            return new ExcelColumnNamesWithOrderEqualityComparer().Equals(cells);
+            var excel = new ExadelExcelValidator(cells);
+
+            excel.ValidateColumnNames();
         }
 
         private static async Task ValidateDataRowsAsync(string[][] dataRows)
