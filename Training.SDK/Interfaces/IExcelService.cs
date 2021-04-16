@@ -10,6 +10,6 @@ namespace Training.SDK.Interfaces
     {
         Task<IEnumerable<ExcelDTO>> ImportExcelFileAsync(IFormFile file);
 
-        Task<byte[]> ExportAutopartsByProducerIdAsync(int producerId);
+        Task<byte[]> ExportAutopartsByProducerIdAsync(int producerId, string carModel);
     }
 }

@@ -53,9 +53,9 @@ namespace Training.Service.Services
             return excelDTOs;
         }
 
-        public async Task<byte[]> ExportAutopartsByProducerIdAsync(int producerId)
+        public async Task<byte[]> ExportAutopartsByProducerIdAsync(int producerId, string carModel)
         {
-            var autoparts = await _autopartRepository.GetByProducerIdAsync(producerId);
+            var autoparts = await _autopartRepository.GetByProducerIdAsync(producerId, carModel);
             using var workbook = new XLWorkbook();
 
             var worksheet = workbook.Worksheets.Add("Producer");

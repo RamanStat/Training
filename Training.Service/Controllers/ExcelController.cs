@@ -23,10 +23,10 @@ namespace Training.Service.Controllers
             return Ok(await _excelService.ImportExcelFileAsync(file));
         }
 
-        [HttpGet("producer/{id}")]
-        public async Task<IActionResult> ExportAutopartsByProducerId(int id)
+        [HttpGet("producer")]
+        public async Task<IActionResult> ExportAutopartsByProducerId(int id, string carModel)
         {
-            return File(await _excelService.ExportAutopartsByProducerIdAsync(id), CONTENT_TYPE, FILE_NAME);
+            return File(await _excelService.ExportAutopartsByProducerIdAsync(id, carModel), CONTENT_TYPE, FILE_NAME);
         }
     }
 }

@@ -9,6 +9,6 @@ namespace Training.RA.Interfaces
     {
         Task<IDbContextTransaction> BeginTransaction();
 
-        Task<List<Autopart>> GetByProducerIdAsync(int producerId);
+        Task<List<Autopart>> GetByProducerIdAsync(int producerId, string carModel);
     }
 }

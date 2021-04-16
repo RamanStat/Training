@@ -38,12 +38,12 @@ namespace Training.RA.SqlRepositories
             return await _context.Instance.Database.BeginTransactionAsync();
         }
 
-        public async Task<List<Autopart>> GetByProducerIdAsync(int producerId)
+        public async Task<List<Autopart>> GetByProducerIdAsync(int producerId, string carModel)
         {
             return await _context.Autoparts
                 .Where(a => a.ProducerId == producerId)
                 .Include(a => a.Producer)
-                .Include(a => a.Cars)
+                .Include(a => a.Cars.Where(c => c.Model == carModel))
                 .Include(a => a.Vendors)
                 .ToListAsync();
         }
