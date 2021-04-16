@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Storage;
 using Training.Data.Entities;
@@ -9,6 +11,6 @@ namespace Training.RA.Interfaces
     {
         Task<IDbContextTransaction> BeginTransaction();
 
-        Task<List<Autopart>> GetByProducerIdAsync(int producerId, string carModel);
+        Task<List<Autopart>> GetByProducerIdWithPredicateAsync(int producerId, Expression<Func<Car, bool>> predicate);
     }
 }

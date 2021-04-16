@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -38,12 +40,12 @@ namespace Training.RA.SqlRepositories
             return await _context.Instance.Database.BeginTransactionAsync();
         }
 
-        public async Task<List<Autopart>> GetByProducerIdAsync(int producerId, string carModel)
+        public async Task<List<Autopart>> GetByProducerIdWithPredicateAsync(int producerId, Expression<Func<Car, bool>> predicate)
         {
             return await _context.Autoparts
                 .Where(a => a.ProducerId == producerId)
                 .Include(a => a.Producer)
-                .Include(a => a.Cars.Where(c => c.Model == carModel))
+                .Include(a => a.Cars.AsQueryable().Where(predicate))
                 .Include(a => a.Vendors)
                 .ToListAsync();
         }
