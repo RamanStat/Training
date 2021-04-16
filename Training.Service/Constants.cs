@@ -16,17 +16,28 @@
 
         public static class ImportFileStructure
         {
+            public const string AUTOPART_NAME_COLUMN_NAME = nameof(AUTOPART_NAME_COLUMN_NAME);
+            public const string AUTOPART_PRICE_COLUMN_NAME = nameof(AUTOPART_PRICE_COLUMN_NAME);
+            public const string AUTOPART_DESCRIPTION_COLUMN_NAME = nameof(AUTOPART_DESCRIPTION_COLUMN_NAME);
+            public const string PRODUCER_NAME_COLUMN_NAME = nameof(PRODUCER_NAME_COLUMN_NAME);
+            public const string CAR_MODEL_COLUMN_NAME = nameof(CAR_MODEL_COLUMN_NAME);
+            public const string CAR_ISSUE_YEAR_COLUMN_NAME = nameof(CAR_ISSUE_YEAR_COLUMN_NAME);
+            public const string CAR_ENGINE_COLUMN_NAME = nameof(CAR_ENGINE_COLUMN_NAME);
+            public const string VENDOR_NAME_COLUMN_NAME = nameof(VENDOR_NAME_COLUMN_NAME);
+        }
+
+        public static class ImportFileColumnNames
+        {
+            public const int TABLE_ROW_OFFSET = 5;
             public const int COLUMN_COUNT = 8;
-            public const string VALID_COLUMN_NAMES_WITH_ORDER =
-                "AUTOPARTNAME-AUTOPARTPRICE-AUTOPARTDESCRIPTION-PRODUCERNAME-CARMODEL-CARISSUEYEAR-CARENGINE-VENDORNAME";
-            public const string AUTOPARTNAME_COLUMN_NAME = nameof(AUTOPARTNAME_COLUMN_NAME);
-            public const string AUTOPARTPRICE_COLUMN_NAME = nameof(AUTOPARTPRICE_COLUMN_NAME);
-            public const string AUTOPARTDESCRIPTION_COLUMN_NAME = nameof(AUTOPARTDESCRIPTION_COLUMN_NAME);
-            public const string PRODUCERNAME_COLUMN_NAME = nameof(PRODUCERNAME_COLUMN_NAME);
-            public const string CARMODEL_COLUMN_NAME = nameof(CARMODEL_COLUMN_NAME);
-            public const string CARISSUEYEAR_COLUMN_NAME = nameof(CARISSUEYEAR_COLUMN_NAME);
-            public const string CARENGINE_COLUMN_NAME = nameof(CARENGINE_COLUMN_NAME);
-            public const string VENDORNAME_COLUMN_NAME = nameof(VENDORNAME_COLUMN_NAME);
+            public const string AUTOPART_NAME_COLUMN = "AUTOPART NAME";
+            public const string AUTOPART_PRICE_COLUMN = "AUTOPART PRICE";
+            public const string AUTOPART_DESCRIPTION_COLUMN = "AUTOPART DESCRIPTION";
+            public const string PRODUCER_NAME_COLUMN = "PRODUCER NAME";
+            public const string CAR_MODEL_COLUMN = "CAR MODEL";
+            public const string CAR_ISSUE_YEAR_COLUMN = "CAR ISSUE YEAR";
+            public const string CAR_ENGINE_COLUMN = "CAR ENGINE";
+            public const string VENDOR_NAME_COLUMN = "VENDOR NAME";
         }
     }
 }
