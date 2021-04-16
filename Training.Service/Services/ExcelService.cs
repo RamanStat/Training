@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -99,7 +100,7 @@ namespace Training.Service.Services
 
             if (errors.Count != 0)
             {
-                throw new ValidationException(string.Join("\n", errors));
+                throw new ValidationException(string.Join(Environment.NewLine, errors));
             }
         }
 

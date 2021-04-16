@@ -16,7 +16,7 @@ namespace Training.Service.Mapping
                 .ForMember(e => e.ProducerName, source => source.MapFrom(s => s[PRODUCER_NAME_COLUMN_OFFSET]))
                 .ForMember(e => e.CarModel, source => source.MapFrom(s => s[CAR_MODEL_COLUMN_OFFSET]))
                 .ForMember(e => e.CarIssueYear, source => source.MapFrom(s => int.Parse(s[CAR_ISSUE_YEAR_COLUMN_OFFSET])))
-                .ForMember(e => e.CarEngine, source => source.MapFrom(s => int.Parse(s[CAR_ENGINE_COLUMN_OFFSET])))
+                .ForMember(e => e.CarEngine, source => source.MapFrom(s => s[CAR_ENGINE_COLUMN_OFFSET]))
                 .ForMember(e => e.VendorName, source => source.MapFrom(s => s[VENDOR_NAME_COLUMN_OFFSET]))
                 .ReverseMap();
 

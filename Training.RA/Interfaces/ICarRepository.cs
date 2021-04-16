@@ -6,6 +6,6 @@ namespace Training.RA.Interfaces
 {
     public interface ICarRepository : IRepository<Car>
     {
-        Task<Car> GetCarByModelAndIssuerYearAndEngineAsync(string carModel, int carIssuerYear, int carEngine, CancellationToken cancellationToken = default);
+        Task<Car> GetCarByModelAndIssuerYearAndEngineAsync(string carModel, int carIssuerYear, string carEngine, CancellationToken cancellationToken = default);
     }
 }

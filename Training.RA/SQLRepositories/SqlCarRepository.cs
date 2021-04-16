@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,11 +33,11 @@ namespace Training.RA.SqlRepositories
             await _context.Instance.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<Car> GetCarByModelAndIssuerYearAndEngineAsync(string carModel, int carIssuerYear, int carEngine, CancellationToken cancellationToken)
+        public async Task<Car> GetCarByModelAndIssuerYearAndEngineAsync(string carModel, int carIssuerYear, string carEngine, CancellationToken cancellationToken)
         {
             var car = await _context.Cars
-                .FirstOrDefaultAsync(c => c.Model == carModel&& c.IssueYear == carIssuerYear && c.Engine == carEngine, 
-                    cancellationToken);
+                .FirstOrDefaultAsync(c => c.Model == carModel && c.IssueYear == carIssuerYear
+                && GetEngineIdentifiers(carEngine) == c.Engine, cancellationToken);
 
             if (car == null)
             {
@@ -67,6 +68,11 @@ namespace Training.RA.SqlRepositories
         {
             _context.Instance.Entry(entity).State = EntityState.Modified;
             await _context.Instance.SaveChangesAsync(cancellationToken);
+        }
+
+        private static int GetEngineIdentifiers(string carEngine)
+        {
+            return (int)(EngineIdentifiers)Enum.Parse(typeof(EngineIdentifiers), carEngine);
         }
     }
 }

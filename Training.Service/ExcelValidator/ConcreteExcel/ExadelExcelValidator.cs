@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
@@ -30,7 +31,7 @@ namespace Training.Service.ExcelValidator.ConcreteExcel
 
             if (errors.Count != 0)
             {
-                throw new ValidationException(string.Join("\n", errors));
+                throw new ValidationException(string.Join(Environment.NewLine, errors));
             }
 
             return Task.CompletedTask;
