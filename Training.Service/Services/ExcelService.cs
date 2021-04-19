@@ -77,6 +77,7 @@ namespace Training.Service.Services
             using var workbook = new XLWorkbook();
 
             var workSheet = CreateWorkSheetWithColumnNames(workbook);
+            var startRow = TABLE_ROW_OFFSET + 1;
 
             foreach (var producerId in bulkDTO.ProducersIds)
             {
@@ -86,7 +87,9 @@ namespace Training.Service.Services
 
                 var autoparts = await _autopartRepository.GetByProducerIdWithPredicateAsync(producerId, findByCarModelAndIssueYear);
                 
-                FillWorkSheetWithDataAndAutoSizeColumns(workSheet, autoparts);
+                FillWorkSheetWithDataAndAutoSizeColumns(workSheet, autoparts, startRow);
+
+                startRow += autoparts.Sum(a => a.Cars.Count + a.Vendors.Count);
             }
             
             await using var stream = new MemoryStream();
@@ -197,7 +200,7 @@ namespace Training.Service.Services
             return worksheet;
         }
 
-        private static void FillWorkSheetWithDataAndAutoSizeColumns(IXLWorksheet workSheet, IList<Autopart> autoparts, int numberOfRow = TABLE_ROW_OFFSET + 1)
+        private static void FillWorkSheetWithDataAndAutoSizeColumns(IXLWorksheet workSheet, IList<Autopart> autoparts, int startRow = TABLE_ROW_OFFSET + 1)
         {
             for (var i = 0; i < autoparts.Count; i++)
             {
@@ -205,23 +208,23 @@ namespace Training.Service.Services
                 {
                     for (var k = 0; k < autoparts[i].Vendors.Count; k++)
                     {
-                        workSheet.Cell(numberOfRow, AUTOPART_NAME_COLUMN_OFFSET + 1).Value =
+                        workSheet.Cell(startRow, AUTOPART_NAME_COLUMN_OFFSET + 1).Value =
                             autoparts[i].Name;
-                        workSheet.Cell(numberOfRow, AUTOPART_PRICE_COLUMN_OFFSET + 1).Value =
+                        workSheet.Cell(startRow, AUTOPART_PRICE_COLUMN_OFFSET + 1).Value =
                             autoparts[i].Price;
-                        workSheet.Cell(numberOfRow, AUTOPART_DESCRIPTION_COLUMN_OFFSET + 1).Value =
+                        workSheet.Cell(startRow, AUTOPART_DESCRIPTION_COLUMN_OFFSET + 1).Value =
                             autoparts[i].Description;
-                        workSheet.Cell(numberOfRow, PRODUCER_NAME_COLUMN_OFFSET + 1).Value =
+                        workSheet.Cell(startRow, PRODUCER_NAME_COLUMN_OFFSET + 1).Value =
                             autoparts[i].Producer.Name;
-                        workSheet.Cell(numberOfRow, CAR_MODEL_COLUMN_OFFSET + 1).Value =
+                        workSheet.Cell(startRow, CAR_MODEL_COLUMN_OFFSET + 1).Value =
                             autoparts[i].Cars.ElementAt(j).Model;
-                        workSheet.Cell(numberOfRow, CAR_ISSUE_YEAR_COLUMN_OFFSET + 1).Value =
+                        workSheet.Cell(startRow, CAR_ISSUE_YEAR_COLUMN_OFFSET + 1).Value =
                             autoparts[i].Cars.ElementAt(j).IssueYear;
-                        workSheet.Cell(numberOfRow, CAR_ENGINE_COLUMN_OFFSET + 1).Value =
+                        workSheet.Cell(startRow, CAR_ENGINE_COLUMN_OFFSET + 1).Value =
                             (EngineIdentifiers)autoparts[i].Cars.ElementAt(j).Engine;
-                        workSheet.Cell(numberOfRow, VENDOR_NAME_COLUMN_OFFSET + 1).Value =
+                        workSheet.Cell(startRow, VENDOR_NAME_COLUMN_OFFSET + 1).Value =
                             autoparts[i].Vendors.ElementAt(k).Name;
-                        numberOfRow++;
+                        startRow++;
                     }
                 }
             }
