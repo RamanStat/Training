@@ -4,8 +4,10 @@ namespace Training.SDK.DTO
 {
     public class BulkDTO
     {
-        public IList<int> ProducersIds = new List<int>();
-        public IList<string> Models = new List<string>();
-        public IList<int> IssueYears = new List<int>();
+        public IList<int> ProducersIds { get; set; }
+
+        public IList<string> Models { get; set; }
+
+        public IList<int> IssueYears { get; set; }
     }
 }
