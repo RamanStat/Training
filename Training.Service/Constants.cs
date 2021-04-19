@@ -43,7 +43,7 @@
         public static class ExportFileSettings
         {
             public const string CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-            public const string FILE_NAME = "producer.xlsx";
+            public const string FILE_NAME = "autoparts.xlsx";
         }
     }
 }
